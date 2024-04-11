@@ -30,19 +30,19 @@ def save_to_database(data_tuple):
 def main():
     client.connect()
     grup_set = set()
-    list_search = ['linux', 'Линукс', 'Ubuntu', 'Debian', 'Fedora', 'ArchLinux', 'CentOS', 'Kali Linux', 'Bash',
-                   'Shell', 'Kernel', 'Systemd', 'Open Source', 'GNU/Linux', 'Terminal', 'Command Line', 'Sysadmin',
-                   'DevOps', 'Server Administration', 'Linux Academy', 'Linux Education', 'Linux Users',
-                   'Linux Community', 'Linux News', 'Linux Development', 'Linux Gaming', 'Embedded Linux',
-                   'Raspberry Pi', 'Docker', 'Kubernetes', 'System Administration', 'Linux Mint', 'Elementary OS',
-                   'LXDE', 'XFCE']
+
+    with open('words_list.txt', 'r', encoding='utf-8') as file:  # Открываем файл со списком слов
+        list_search = file.readlines()  # Преобразуем файл в список строк
+
+    # Удаляем символы новой строки и пробельные символы с обеих сторон строк и оставляем только строки, которые не пусты после этого
+    list_search = [line.strip() for line in list_search if line.strip()]
+    print(list_search)
     for search in list_search:
         result = client(functions.contacts.SearchRequest(
             q=search,
             limit=100
         ))
         for chat in result.chats:
-
             res = (chat.id,  # ID группы / канала
                    chat.title,  # Название группы / канала
                    chat.participants_count,  # Количество участников группы / канала
