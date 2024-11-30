@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from telethon.sync import TelegramClient, functions
 import configparser
-import sqlite3
+
+from database.database import save_to_database
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -10,21 +11,6 @@ api_hash = config['telegram_settings']['api_hash']
 username = config['telegram_settings']['username']
 
 client = TelegramClient(username, int(api_id), api_hash)
-
-
-def save_to_database(data_tuple):
-    # Подключение к базе данных
-    conn = sqlite3.connect('your_database.db')
-    cursor = conn.cursor()
-    # Создание таблицы, если её нет
-    cursor.execute('''CREATE TABLE IF NOT EXISTS groups (id, title, participants_count, username, access_hash, date)''')
-    # Вставка данных в таблицу
-    cursor.execute(
-        '''INSERT INTO groups (id, title, participants_count, username, access_hash, date) VALUES (?, ?, ?, ?, ?, ?) ''',
-        data_tuple)
-    # Сохранение изменений и закрытие соединения
-    conn.commit()
-    conn.close()
 
 
 def main():
