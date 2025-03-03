@@ -4,10 +4,18 @@
 и сохранения информации в базу данных.
 """
 
-from telethon.sync import TelegramClient, functions
+import asyncio
 import configparser
-from database.database import save_to_database
+
+from groq import AsyncGroq
 from loguru import logger
+from telethon.sync import TelegramClient, functions
+
+from config import get_groq_api_key
+from database.database import save_to_database
+from proxy_config import setup_proxy
+
+setup_proxy()  # Установка прокси
 
 logger.add('log/log.log')
 
@@ -18,16 +26,41 @@ api_id = config['telegram_settings']['api_id']
 api_hash = config['telegram_settings']['api_hash']
 username = config['telegram_settings']['username']
 
-# Инициализация клиента Telegram
-client = TelegramClient(username, int(api_id), api_hash)
+async def get_groq_response(user_input):
+    """
+    Получение ответа от Groq API.
+    """
+    # Инициализация Groq клиента
+    client_groq = AsyncGroq(api_key=get_groq_api_key())
+    # Формируем запрос к Groq API
+    chat_completion = client_groq.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": f"Придумай 10 уникальных и интересных ключевых слов для поиска в Telegram, на основе текста пользователя: {user_input}",
+            }
+        ],
+        model="llama3-8b-8192",
+    )
 
-def main():
+    # Получаем ответ от ИИ
+    ai_response = chat_completion.choices[0].message.content
+
+    return ai_response
+
+async def main():
     """
     Основная функция, выполняющая поиск по ключевым словам
     и сохранение найденных групп/каналов в базу данных.
     """
-    client.connect()  # Подключение к Telegram
+    # Инициализация клиента Telegram
+    client = TelegramClient(username, int(api_id), api_hash)
+    await client.connect()  # Подключение к Telegram
     groups_set = set()  # Создание множества для уникальных результатов
+
+    user_input = input("Введите сообщение для ИИ: ")
+    ai_response = await get_groq_response(user_input)
+    print("Ответ от ИИ:", ai_response)
 
     # Чтение списка ключевых слов из файла
     with open('words_list.txt', 'r', encoding='utf-8') as file:
@@ -64,5 +97,7 @@ def main():
         logger.info("Найденная группа/канал:", group)
         save_to_database(group)  # Сохранение данных в базу данных SQLite
 
+
 if __name__ == '__main__':
+    asyncio.run(main())
     main()
