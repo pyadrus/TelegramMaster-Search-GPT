@@ -25,28 +25,31 @@ config.read('config.ini')
 api_id = config['telegram_settings']['api_id']
 api_hash = config['telegram_settings']['api_hash']
 username = config['telegram_settings']['username']
+# Инициализация Groq клиента
+client_groq = AsyncGroq(api_key=get_groq_api_key())
+
 
 async def get_groq_response(user_input):
     """
     Получение ответа от Groq API.
     """
-    # Инициализация Groq клиента
-    client_groq = AsyncGroq(api_key=get_groq_api_key())
+
     # Формируем запрос к Groq API
-    chat_completion = client_groq.chat.completions.create(
+    chat_completion = await client_groq.chat.completions.create(
         messages=[
             {
                 "role": "user",
-                "content": f"Придумай 10 уникальных и интересных ключевых слов для поиска в Telegram, на основе текста пользователя: {user_input}",
+                "content": f"Придумай 50 уникальных и интересных ключевых словосочетаний для поиска в Telegram, на основе текста пользователя: {user_input}. Верни результат в формате простого списка, каждое слово на новой строке, без нумерации и дополнительных символов.",
             }
         ],
-        model="llama3-8b-8192",
+        model="gemma2-9b-it",
     )
 
     # Получаем ответ от ИИ
     ai_response = chat_completion.choices[0].message.content
 
     return ai_response
+
 
 async def main():
     """
@@ -62,6 +65,10 @@ async def main():
     ai_response = await get_groq_response(user_input)
     print("Ответ от ИИ:", ai_response)
 
+    # Сохранение ответа ИИ в файл words_list.txt
+    with open('words_list.txt', 'w', encoding='utf-8') as file:
+        file.write(ai_response)
+
     # Чтение списка ключевых слов из файла
     with open('words_list.txt', 'r', encoding='utf-8') as file:
         search_terms = file.readlines()
@@ -73,7 +80,7 @@ async def main():
 
     for term in search_terms:
         # Поиск групп и каналов по ключевому слову
-        search_results = client(functions.contacts.SearchRequest(
+        search_results = await client(functions.contacts.SearchRequest(
             q=term,
             limit=100
         ))
@@ -100,4 +107,3 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-    main()
