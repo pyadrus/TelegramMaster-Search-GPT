@@ -1,52 +1,68 @@
 # -*- coding: utf-8 -*-
+"""
+Скрипт для поиска групп и каналов Telegram по ключевым словам
+и сохранения информации в базу данных.
+"""
+
 from telethon.sync import TelegramClient, functions
 import configparser
-
 from database.database import save_to_database
+from loguru import logger
 
+logger.add('log/log.log')
+
+# Чтение конфигурации из config.ini
 config = configparser.ConfigParser()
 config.read('config.ini')
 api_id = config['telegram_settings']['api_id']
 api_hash = config['telegram_settings']['api_hash']
 username = config['telegram_settings']['username']
 
+# Инициализация клиента Telegram
 client = TelegramClient(username, int(api_id), api_hash)
 
-
 def main():
-    client.connect()
-    grup_set = set()
+    """
+    Основная функция, выполняющая поиск по ключевым словам
+    и сохранение найденных групп/каналов в базу данных.
+    """
+    client.connect()  # Подключение к Telegram
+    groups_set = set()  # Создание множества для уникальных результатов
 
-    with open('words_list.txt', 'r', encoding='utf-8') as file:  # Открываем файл со списком слов
-        list_search = file.readlines()  # Преобразуем файл в список строк
+    # Чтение списка ключевых слов из файла
+    with open('words_list.txt', 'r', encoding='utf-8') as file:
+        search_terms = file.readlines()
 
-    # Удаляем символы новой строки и пробельные символы с обеих сторон строк и оставляем только строки, которые не пусты после этого
-    list_search = [line.strip() for line in list_search if line.strip()]
-    print(list_search)
-    for search in list_search:
-        result = client(functions.contacts.SearchRequest(
-            q=search,
+    # Очистка списка от пустых строк и пробелов
+    search_terms = [term.strip() for term in search_terms if term.strip()]
+
+    logger.info("Ключевые слова для поиска:", search_terms)
+
+    for term in search_terms:
+        # Поиск групп и каналов по ключевому слову
+        search_results = client(functions.contacts.SearchRequest(
+            q=term,
             limit=100
         ))
-        for chat in result.chats:
-            res = (chat.id,  # ID группы / канала
-                   chat.title,  # Название группы / канала
-                   chat.participants_count,  # Количество участников группы / канала
-                   chat.username,  # Username группы / канала
-                   chat.access_hash,  # Hash группы / канала
-                   chat.date)  # Дата создания группы / канала
 
-            grup_set.add(res)
+        # Обработка найденных групп и каналов
+        for chat in search_results.chats:
+            group_info = (
+                chat.id,  # ID группы / канала
+                chat.title,  # Название группы / канала
+                chat.participants_count,  # Количество участников
+                chat.username,  # Username группы / канала
+                chat.access_hash,  # Hash группы / канала
+                chat.date  # Дата создания
+            )
+            groups_set.add(group_info)  # Добавление информации в множество
 
-    # Преобразование set обратно в список, если это необходимо
-    grup_list = list(grup_set)
+    # Преобразование множества в список для дальнейшей обработки
+    groups_list = list(groups_set)
 
-    for i in grup_list:
-        print(i)
-
-        # Сохранение данных в базу данных SQLite
-        save_to_database(i)
-
+    for group in groups_list:
+        logger.info("Найденная группа/канал:", group)
+        save_to_database(group)  # Сохранение данных в базу данных SQLite
 
 if __name__ == '__main__':
     main()
