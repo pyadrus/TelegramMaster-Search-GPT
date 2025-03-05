@@ -1,6 +1,15 @@
+# -*- coding: utf-8 -*-
+import configparser
 import os
 
 from dotenv import load_dotenv
+
+# Чтение конфигурации из config.ini
+config = configparser.ConfigParser()
+config.read('config.ini')
+api_id = config['telegram_settings']['api_id']
+api_hash = config['telegram_settings']['api_hash']
+username = config['telegram_settings']['username']
 
 # Загружаем переменные окружения из файла .env
 load_dotenv()

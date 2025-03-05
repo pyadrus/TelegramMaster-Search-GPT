@@ -1,17 +1,11 @@
 # -*- coding: utf-8 -*-
-"""
-Скрипт для поиска групп и каналов Telegram по ключевым словам
-и сохранения информации в базу данных.
-"""
-
 import asyncio
-import configparser
 
 from groq import AsyncGroq
 from loguru import logger
 from telethon.sync import TelegramClient, functions
 
-from config import get_groq_api_key
+from config import get_groq_api_key, username, api_id, api_hash
 from database.database import save_to_database
 from proxy_config import setup_proxy
 
@@ -19,12 +13,6 @@ setup_proxy()  # Установка прокси
 
 logger.add('log/log.log')
 
-# Чтение конфигурации из config.ini
-config = configparser.ConfigParser()
-config.read('config.ini')
-api_id = config['telegram_settings']['api_id']
-api_hash = config['telegram_settings']['api_hash']
-username = config['telegram_settings']['username']
 # Инициализация Groq клиента
 client_groq = AsyncGroq(api_key=get_groq_api_key())
 
@@ -39,7 +27,9 @@ async def get_groq_response(user_input):
         messages=[
             {
                 "role": "user",
-                "content": f"Придумай 50 уникальных и интересных ключевых словосочетаний для поиска в Telegram, на основе текста пользователя: {user_input}. Верни результат в формате простого списка, каждое слово на новой строке, без нумерации и дополнительных символов.",
+                "content": f"Придумай 100 уникальных и интересных ключевых словосочетаний для поиска в Telegram, на "
+                           f"основе текста пользователя: {user_input}. Верни результат в формате простого списка, "
+                           f"каждое слово на новой строке, без нумерации и дополнительных символов.",
             }
         ],
         model="gemma2-9b-it",
@@ -99,9 +89,9 @@ async def main():
 
     # Преобразование множества в список для дальнейшей обработки
     groups_list = list(groups_set)
+    logger.info("Найденные группы/каналы:", groups_list)
 
     for group in groups_list:
-        logger.info("Найденная группа/канал:", group)
         save_to_database(group)  # Сохранение данных в базу данных SQLite
 
 
