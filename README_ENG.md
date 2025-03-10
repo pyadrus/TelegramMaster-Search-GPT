@@ -14,7 +14,7 @@ Instructions for use:
 
 Models to choose from:
 
-* * queen-2.5-32b,
+* queen-2.5-32b,
 * qwen-2.5-coder-32b,
 * qwen-qwq-32b,
 * deepseek-r1-distill-qwen-32b,
