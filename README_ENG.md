@@ -1,4 +1,4 @@
-A small free program to search for groups and channels in TG.
+A small program to search for groups and channels in TG.
 
 The project is based on the groq library and telethon
 
