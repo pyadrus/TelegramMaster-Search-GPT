@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+
+from groq import AsyncGroq
+
+from config import get_groq_api_key, selectedmodel
+
+# Инициализация Groq клиента
+client_groq = AsyncGroq(api_key=get_groq_api_key())
+
+
+async def get_groq_response(user_input):
+    """
+    Получение ответа от Groq API.
+    """
+
+    # Формируем запрос к Groq API
+    chat_completion = await client_groq.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": f"Придумай 200 уникальных и интересных ключевых словосочетаний для поиска в Telegram, на "
+                           f"основе текста пользователя: {user_input}. Верни результат в формате простого списка, "
+                           f"каждое слово на новой строке, без нумерации и дополнительных символов.",
+            }
+        ],
+        model=f"{selectedmodel}",
+    )
+
+    # Получаем ответ от ИИ
+    ai_response = chat_completion.choices[0].message.content
+
+    return ai_response
