@@ -1,3 +1,5 @@
+[English readme](README_ENG.md) • [Русский readme](README.md)
+
 Небольшая программа по поиску групп и каналов в ТГ.
 
 Проект работает на основе библиотеки groq и telethon

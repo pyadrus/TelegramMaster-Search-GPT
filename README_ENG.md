@@ -1,3 +1,5 @@
+[English readme](README_ENG.md) • [Русский readme](README.md)
+
 A small program to search for groups and channels in TG.
 
 The project is based on the groq library and telethon
