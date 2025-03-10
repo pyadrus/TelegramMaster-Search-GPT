@@ -26,7 +26,7 @@ async def main():
     elif user_imput == "2":
         print("Настройки")
         # Вызов функции
-        select_and_save_model()
+        await select_and_save_model()
     else:
         print("Некорректный ввод")
 

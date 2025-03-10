@@ -1,7 +1,7 @@
 import configparser
 
 
-def select_and_save_model():
+async def select_and_save_model():
     ai_list = {
         '1': 'qwen-2.5-32b',
         '2': 'qwen-2.5-coder-32b',
