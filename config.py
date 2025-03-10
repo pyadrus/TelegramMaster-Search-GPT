@@ -11,6 +11,8 @@ api_id = config['telegram_settings']['api_id']
 api_hash = config['telegram_settings']['api_hash']
 username = config['telegram_settings']['username']
 
+selectedmodel = config['Settings']['selectedmodel']
+
 # Загружаем переменные окружения из файла .env
 load_dotenv()
 
