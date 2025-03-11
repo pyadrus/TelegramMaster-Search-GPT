@@ -16,6 +16,7 @@ async def main():
     """
     try:
         print("[red] TelegramMaster-Search-GPT\n\n"
+              
               "[green] 1 - перебор данных\n"
               "[green] 2 - настройки")
         user_imput = input("Выберите действие: ")
