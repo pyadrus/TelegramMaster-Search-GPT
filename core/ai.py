@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from loguru import logger
-from rich import print
 from groq import AsyncGroq
+from loguru import logger
 
-from config import get_groq_api_key, selectedmodel
-from proxy_config import setup_proxy
+from core.config import get_groq_api_key, selectedmodel
+from core.proxy_config import setup_proxy
 
 setup_proxy()  # Установка прокси
 

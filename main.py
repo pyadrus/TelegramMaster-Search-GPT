@@ -15,13 +15,14 @@ async def main():
     Основная функция, выполняющая поиск по ключевым словам и сохранение найденных групп/каналов в базу данных.
     """
     try:
-        print("[green] 1 - перебор данных\n"
+        print("[red] TelegramMaster-Search-GPT\n\n"
+              "[green] 1 - перебор данных\n"
               "[green] 2 - настройки")
         user_imput = input("Выберите действие: ")
         if user_imput == "1":
             await search_and_save_telegram_groups()
         elif user_imput == "2":
-            print("Настройки")
+            print("[red] Настройки")
             # Вызов функции
             await select_and_save_model()
         else:
