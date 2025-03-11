@@ -1,6 +1,6 @@
-Telethon~=1.36.0
-configparser~=7.0.1
-loguru~=0.6.0
-groq~=0.15.0
-python-dotenv~=1.0.1
-rich~=13.7.1
+Telethon
+configparser
+loguru
+groq
+python-dotenv
+rich

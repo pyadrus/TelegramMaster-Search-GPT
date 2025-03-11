@@ -1,6 +1,22 @@
 import configparser
+
 from loguru import logger
 from rich import print
+
+async def the_api_id_entry():
+    """Запись api_id"""
+    config = configparser.ConfigParser()
+    config.read('user_data/config.ini', encoding='utf-8')
+    # Получение ввода от пользователя
+    api_id = input("Введите api_id: ").strip()
+    # Обновляем или добавляем секцию telegram_settings
+    if not config.has_section('telegram_settings'):
+        config.add_section('telegram_settings')
+    config.set('telegram_settings', 'api_id', api_id)
+    # Сохранение изменений в config.ini
+    with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
+        config.write(configfile)
+    print(f"api_id {api_id} успешно сохранен в config.ini")
 
 async def select_and_save_model():
     try:
@@ -27,28 +43,21 @@ async def select_and_save_model():
 
         config = configparser.ConfigParser()
         config.read('user_data/config.ini', encoding='utf-8')
-
         # Вывод списка моделей
         print("Выберите модель ИИ:")
         for key, value in ai_list.items():
             print(f"{key}: {value}")
-
         # Получение ввода от пользователя
         choice = input("Введите номер модели: ").strip()
-
         if choice in ai_list:
             selected_model = ai_list[choice]
-
             # Обновляем или добавляем секцию Settings
             if not config.has_section('Settings'):
                 config.add_section('Settings')
-
             config.set('Settings', 'selectedmodel', selected_model)
-
             # Сохранение изменений в config.ini
             with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
                 config.write(configfile)
-
             print(f"Модель {selected_model} успешно сохранена в config.ini")
         else:
             print("Ошибка: некорректный выбор.")
