@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import configparser
 import os
-
+from loguru import logger
+from rich import print
 from dotenv import load_dotenv
 
 # Чтение конфигурации из config.ini
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('user_data/config.ini')
 api_id = config['telegram_settings']['api_id']
 api_hash = config['telegram_settings']['api_hash']
 username = config['telegram_settings']['username']
