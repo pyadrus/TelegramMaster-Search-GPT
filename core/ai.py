@@ -3,6 +3,9 @@
 from groq import AsyncGroq
 
 from config import get_groq_api_key, selectedmodel
+from proxy_config import setup_proxy
+
+setup_proxy()  # Установка прокси
 
 # Инициализация Groq клиента
 client_groq = AsyncGroq(api_key=get_groq_api_key())

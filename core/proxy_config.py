@@ -3,7 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-from config import get_proxy_user, get_proxy_password, get_proxy_port, get_proxy_ip
+from core.config import get_proxy_user, get_proxy_password, get_proxy_port, get_proxy_ip
 
 load_dotenv()  # Загружаем переменные окружения из файла .env
 

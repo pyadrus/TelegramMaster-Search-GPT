@@ -44,7 +44,7 @@ async def select_and_save_model():
         config.set('Settings', 'selectedmodel', selected_model)
 
         # Сохранение изменений в config.ini
-        with open('config.ini', 'w', encoding='utf-8') as configfile:
+        with open('../user_data/config.ini', 'w', encoding='utf-8') as configfile:
             config.write(configfile)
 
         print(f"Модель {selected_model} успешно сохранена в config.ini")

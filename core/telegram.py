@@ -3,13 +3,17 @@
 from loguru import logger
 from telethon.sync import TelegramClient, functions
 
-from ai import get_groq_response
-from config import username, api_id, api_hash
-from database.database import save_to_database
+from core.ai import get_groq_response
+from core.config import username, api_id, api_hash
+from core.database.database import save_to_database, remove_duplicates
+from core.proxy_config import setup_proxy
 
 
 async def search_and_save_telegram_groups():
     """Поиск и сохранение групп Telegram"""
+
+    setup_proxy()  # Установка прокси
+
     # Инициализация клиента Telegram
     client = TelegramClient(username, int(api_id), api_hash)
     await client.connect()  # Подключение к Telegram
@@ -20,11 +24,11 @@ async def search_and_save_telegram_groups():
     print("Ответ от ИИ:", ai_response)
 
     # Сохранение ответа ИИ в файл words_list.txt
-    with open('words_list.txt', 'w', encoding='utf-8') as file:
+    with open('../user_data/words_list.txt', 'w', encoding='utf-8') as file:
         file.write(ai_response)
 
     # Чтение списка ключевых слов из файла
-    with open('words_list.txt', 'r', encoding='utf-8') as file:
+    with open('../user_data/words_list.txt', 'r', encoding='utf-8') as file:
         search_terms = file.readlines()
 
     # Очистка списка от пустых строк и пробелов
@@ -54,6 +58,9 @@ async def search_and_save_telegram_groups():
     # Преобразование множества в список для дальнейшей обработки
     groups_list = list(groups_set)
     logger.info("Найденные группы/каналы:", groups_list)
+
+    # Удаление дубликатов из базы данных
+    remove_duplicates()
 
     for group in groups_list:
         save_to_database(group)  # Сохранение данных в базу данных SQLite
