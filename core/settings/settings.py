@@ -3,15 +3,30 @@ import configparser
 from loguru import logger
 from rich import print
 
+
 async def saving_changes_in_config_ini(config):
     """Сохранение изменений в config.ini"""
     with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
         config.write(configfile)
 
-async def the_api_hash_entry():
-    """Запись api_hash в config.ini"""
+
+async def read_config_file():
+    """
+    Чтение данных из config.ini
+
+    Функция считывает данные из файла конфигурации 'config.ini', который находится в директории 'user_data'.
+    Файл конфигурации должен быть в кодировке 'utf-8'.
+
+    :return: Объект ConfigParser, содержащий данные из файла конфигурации.
+    """
     config = configparser.ConfigParser()
     config.read('user_data/config.ini', encoding='utf-8')
+    return config
+
+
+async def the_api_hash_entry():
+    """Запись api_hash в config.ini"""
+    config = await read_config_file()
     # Получение ввода от пользователя
     api_hash = input("Введите api_hash: ").strip()
     # Обновляем или добавляем секцию telegram_settings
@@ -22,10 +37,10 @@ async def the_api_hash_entry():
     await saving_changes_in_config_ini(config)
     print(f"api_hash {api_hash} успешно сохранен в config.ini")
 
+
 async def the_api_id_entry():
     """Запись api_id в config.ini"""
-    config = configparser.ConfigParser()
-    config.read('user_data/config.ini', encoding='utf-8')
+    config = await read_config_file()
     # Получение ввода от пользователя
     api_id = input("Введите api_id: ").strip()
     # Обновляем или добавляем секцию telegram_settings
@@ -35,6 +50,7 @@ async def the_api_id_entry():
     # Сохранение изменений в config.ini
     await saving_changes_in_config_ini(config)
     print(f"api_id {api_id} успешно сохранен в config.ini")
+
 
 async def select_and_save_model():
     try:
@@ -59,8 +75,7 @@ async def select_and_save_model():
             '18': 'mixtral-8x7b-32768',
         }
 
-        config = configparser.ConfigParser()
-        config.read('user_data/config.ini', encoding='utf-8')
+        config = await read_config_file()
         # Вывод списка моделей
         print("Выберите модель ИИ:")
         for key, value in ai_list.items():

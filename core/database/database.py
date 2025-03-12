@@ -10,7 +10,8 @@ def save_to_database(data_tuple):
         conn = sqlite3.connect('user_data/your_database.db')
         cursor = conn.cursor()
         # Создание таблицы, если её нет
-        cursor.execute('''CREATE TABLE IF NOT EXISTS groups (id, title, participants_count, username, access_hash, date)''')
+        cursor.execute(
+            '''CREATE TABLE IF NOT EXISTS groups (id, title, participants_count, username, access_hash, date)''')
         # Вставка данных в таблицу
         cursor.execute(
             '''INSERT INTO groups (id, title, participants_count, username, access_hash, date) VALUES (?, ?, ?, ?, ?, ?) ''',
@@ -20,6 +21,7 @@ def save_to_database(data_tuple):
         conn.close()
     except Exception as e:
         logger.exception(e)
+
 
 def remove_duplicates():
     try:
