@@ -3,6 +3,11 @@ import configparser
 from loguru import logger
 from rich import print
 
+async def saving_changes_in_config_ini(config):
+    """Сохранение изменений в config.ini"""
+    with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
+        config.write(configfile)
+
 async def the_api_hash_entry():
     """Запись api_hash в config.ini"""
     config = configparser.ConfigParser()
@@ -14,8 +19,7 @@ async def the_api_hash_entry():
         config.add_section('telegram_settings')
     config.set('telegram_settings', 'api_hash', api_hash)
     # Сохранение изменений в config.ini
-    with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
-        config.write(configfile)
+    await saving_changes_in_config_ini(config)
     print(f"api_hash {api_hash} успешно сохранен в config.ini")
 
 async def the_api_id_entry():
@@ -29,8 +33,7 @@ async def the_api_id_entry():
         config.add_section('telegram_settings')
     config.set('telegram_settings', 'api_id', api_id)
     # Сохранение изменений в config.ini
-    with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
-        config.write(configfile)
+    await saving_changes_in_config_ini(config)
     print(f"api_id {api_id} успешно сохранен в config.ini")
 
 async def select_and_save_model():
@@ -71,8 +74,7 @@ async def select_and_save_model():
                 config.add_section('Settings')
             config.set('Settings', 'selectedmodel', selected_model)
             # Сохранение изменений в config.ini
-            with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
-                config.write(configfile)
+            await saving_changes_in_config_ini(config)
             print(f"Модель {selected_model} успешно сохранена в config.ini")
         else:
             print("Ошибка: некорректный выбор.")
