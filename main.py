@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import asyncio
-
+import webbrowser
 from loguru import logger
 from rich import print
 
@@ -18,12 +18,14 @@ async def main():
         print("[red] TelegramMaster-Search-GPT\n\n"
               
               "[green] 1 - Перебор данных\n"
-              "[green] 2 - Настройки")
+              "[green] 2 - Настройки\n"
+              "[green] 3 - Документация\n")
         user_input = input("Выберите действие: ")
         if user_input == "1":
             await search_and_save_telegram_groups()
         elif user_input == "2":
             print("[red] Настройки\n\n"
+                  
                   "[green] 1 - выбор модели ИИ\n"
                   "[green] 2 - запись api_id")
             user_input = input("Выберите действие: ")
@@ -34,6 +36,10 @@ async def main():
             elif user_input == "2":
                 print("Запись api_id")
                 await the_api_id_entry()
+        elif user_input == "3":
+            print("[red] Открыть документацию\n")
+            webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki/Руководство-по-работе-с-TelegramMaster‐Search‐GPT', new=2)
+
         else:
             print("[red] Некорректный ввод")
     except Exception as e:
