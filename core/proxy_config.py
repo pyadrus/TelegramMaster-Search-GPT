@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
-from loguru import logger
-from rich import print
+
 from dotenv import load_dotenv
+from loguru import logger
 
 from core.config import get_proxy_user, get_proxy_password, get_proxy_port, get_proxy_ip
 

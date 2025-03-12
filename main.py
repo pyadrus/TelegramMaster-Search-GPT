@@ -4,7 +4,7 @@ import webbrowser
 from loguru import logger
 from rich import print
 
-from core.ai_list import select_and_save_model, the_api_id_entry
+from core.settings.settings import select_and_save_model, the_api_id_entry, the_api_hash_entry
 from core.telegram import search_and_save_telegram_groups
 
 logger.add('user_data/log/log.log')
@@ -27,7 +27,8 @@ async def main():
             print("[red] Настройки\n\n"
                   
                   "[green] 1 - выбор модели ИИ\n"
-                  "[green] 2 - запись api_id")
+                  "[green] 2 - запись api_id"
+                  "[green] 3 - запись api_hash")
             user_input = input("Выберите действие: ")
             if user_input == "1":
                 print("Выбор модели ИИ")
@@ -36,6 +37,9 @@ async def main():
             elif user_input == "2":
                 print("Запись api_id")
                 await the_api_id_entry()
+            elif user_input == "3":
+                print("Запись api_hash")
+                await the_api_hash_entry()
         elif user_input == "3":
             print("[red] Открыть документацию\n")
             webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki/Руководство-по-работе-с-TelegramMaster‐Search‐GPT', new=2)

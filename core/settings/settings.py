@@ -3,8 +3,23 @@ import configparser
 from loguru import logger
 from rich import print
 
+async def the_api_hash_entry():
+    """Запись api_hash в config.ini"""
+    config = configparser.ConfigParser()
+    config.read('user_data/config.ini', encoding='utf-8')
+    # Получение ввода от пользователя
+    api_hash = input("Введите api_hash: ").strip()
+    # Обновляем или добавляем секцию telegram_settings
+    if not config.has_section('telegram_settings'):
+        config.add_section('telegram_settings')
+    config.set('telegram_settings', 'api_hash', api_hash)
+    # Сохранение изменений в config.ini
+    with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
+        config.write(configfile)
+    print(f"api_hash {api_hash} успешно сохранен в config.ini")
+
 async def the_api_id_entry():
-    """Запись api_id"""
+    """Запись api_id в config.ini"""
     config = configparser.ConfigParser()
     config.read('user_data/config.ini', encoding='utf-8')
     # Получение ввода от пользователя

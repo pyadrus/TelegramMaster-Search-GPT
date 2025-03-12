@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import sqlite3
+
 from loguru import logger
-from rich import print
+
 
 def save_to_database(data_tuple):
     try:
