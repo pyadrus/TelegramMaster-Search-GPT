@@ -8,7 +8,6 @@ from core.ai import get_groq_response
 from core.config import username, api_id, api_hash
 from core.database import save_to_database, remove_duplicates
 from core.file_utils import writing_file, reading_file
-from core.proxy_config import setup_proxy
 
 
 async def connect_to_telegram() -> TelegramClient:
@@ -51,8 +50,7 @@ async def search_and_processing_found_groups(client, term, groups_set) -> None:
 async def search_and_save_telegram_groups(user_input: str) -> None:
     """Основная функция для поиска и сохранения групп Telegram."""
     try:
-        setup_proxy()  # Установка прокси
-        client = connect_to_telegram()  # Инициализация клиента Telegram
+        client = await connect_to_telegram()  # Инициализация клиента Telegram
         groups_set = set()  # Создание множества для уникальных результатов
 
         # Получение ответа ИИ и его обработка

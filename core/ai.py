@@ -6,21 +6,19 @@ from rich import print
 from core.config import get_groq_api_key, selectedmodel
 from core.proxy_config import setup_proxy
 
-setup_proxy()  # Установка прокси
-
-# Инициализация Groq клиента
-client_groq = AsyncGroq(api_key=get_groq_api_key())
-
 
 async def get_groq_response(user_input):
     """Получение ответа от Groq API."""
+    setup_proxy()  # Установка прокси
+    # Инициализация Groq клиента
+    client_groq = AsyncGroq(api_key=get_groq_api_key())
     try:
         # Формируем запрос к Groq API
         chat_completion = await client_groq.chat.completions.create(
             messages=[
                 {
                     "role": "user",
-                    "content": f"Придумай 200 уникальных и интересных ключевых словосочетаний для поиска в Telegram, на "
+                    "content": f"Придумай 50 уникальных и интересных ключевых словосочетаний для поиска в Telegram, на "
                                f"основе текста пользователя: {user_input}. Верни результат в формате простого списка, "
                                f"каждое слово на новой строке, без нумерации и дополнительных символов.",
                 }
