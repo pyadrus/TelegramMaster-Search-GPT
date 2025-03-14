@@ -32,29 +32,12 @@ async def reading_file():
     return search_terms
 
 
-async def search_and_save_telegram_groups(user_input):
-    """Поиск и сохранение групп Telegram"""
-    try:
-        setup_proxy()  # Установка прокси
-        client = connect_to_telegram()  # Инициализация клиента Telegram
-        groups_set = set()  # Создание множества для уникальных результатов
-        ai_response = await get_groq_response(user_input)  # Получение ответа от Groq API.
-        await writing_file(ai_response)  # Сохранение ответа ИИ в файл words_list.txt
-        search_terms = await reading_file()  # Чтение списка ключевых слов из файла
-        # Очистка списка от пустых строк и пробелов
-        search_terms = [term.strip() for term in search_terms if term.strip()]
-        logger.info("Ключевые слова для поиска:", search_terms)
-        for term in search_terms:
-            # Поиск групп и каналов по ключевому слову
-            await search_and_processing_found_groups(client, term, groups_set)
-        # Преобразование множества в список для дальнейшей обработки
-        groups_list = list(groups_set)
-        for group in groups_list:
-            save_to_database(group)  # Сохранение данных в базу данных SQLite
-        # Удаление дубликатов из базы данных
-        remove_duplicates()
-    except Exception as e:
-        logger.exception(e)
+async def converting_into_a_list_for_further_processing(groups_set):
+    """Функция преобразования множества в список для дальнейшей обработки"""
+    # Преобразование множества в список для дальнейшей обработки
+    groups_list = list(groups_set)
+    for group in groups_list:
+        save_to_database(group)  # Сохранение данных в базу данных SQLite
 
 
 async def search_and_processing_found_groups(client, term, groups_set):
@@ -78,3 +61,25 @@ async def search_and_processing_found_groups(client, term, groups_set):
     except FloodWaitError as e:
         print(f"Ошибка флуда: {e}")
         return
+
+
+async def search_and_save_telegram_groups(user_input):
+    """Поиск и сохранение групп Telegram"""
+    try:
+        setup_proxy()  # Установка прокси
+        client = connect_to_telegram()  # Инициализация клиента Telegram
+        groups_set = set()  # Создание множества для уникальных результатов
+        ai_response = await get_groq_response(user_input)  # Получение ответа от Groq API.
+        await writing_file(ai_response)  # Сохранение ответа ИИ в файл words_list.txt
+        search_terms = await reading_file()  # Чтение списка ключевых слов из файла
+        # Очистка списка от пустых строк и пробелов
+        search_terms = [term.strip() for term in search_terms if term.strip()]
+        logger.info("Ключевые слова для поиска:", search_terms)
+        for term in search_terms:
+            # Поиск групп и каналов по ключевому слову
+            await search_and_processing_found_groups(client, term, groups_set)
+        # Преобразование множества в список для дальнейшей обработки
+        await converting_into_a_list_for_further_processing(groups_set)
+        remove_duplicates()  # Удаление дубликатов из базы данных
+    except Exception as e:
+        logger.exception(e)
