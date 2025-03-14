@@ -7,6 +7,7 @@ from telethon.sync import TelegramClient, functions
 from core.ai import get_groq_response
 from core.config import username, api_id, api_hash
 from core.database.database import save_to_database, remove_duplicates
+from core.file_utils import writing_file, reading_file
 from core.proxy_config import setup_proxy
 
 
@@ -15,19 +16,6 @@ async def connect_to_telegram() -> TelegramClient:
     client = TelegramClient(f"user_data/{username}", int(api_id), api_hash)
     await client.connect()  # Подключение к Telegram
     return client
-
-
-async def writing_file(ai_response) -> None:
-    """Запись содержимого в файл words_list.txt."""
-    with open('user_data/words_list.txt', 'w', encoding='utf-8') as file:
-        file.write(ai_response)
-
-
-async def reading_file() -> list[str]:
-    """Чтение поисковых терминов из файла words_list.txt."""
-    with open('user_data/words_list.txt', 'r', encoding='utf-8') as file:
-        search_terms = file.readlines()
-    return search_terms
 
 
 async def converting_into_a_list_for_further_processing(groups_set) -> None:

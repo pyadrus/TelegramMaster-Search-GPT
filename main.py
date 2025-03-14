@@ -1,33 +1,17 @@
 # -*- coding: utf-8 -*-
 import asyncio
-import json
 import os
 import webbrowser
 
 from loguru import logger
 from rich import print
 
+from core.file_utils import save_language, load_language
 from core.settings.settings import select_and_save_model, the_api_id_entry, the_api_hash_entry
 from core.telegram import search_and_save_telegram_groups
 from localization import set_language, get_text
 
 logger.add('user_data/log/log.log')
-
-
-def load_language():
-    """Функция загрузки языка из файла"""
-    try:
-        with open("user_data/lang_settings.json", "r") as f:
-            return json.load(f).get("language", "ru")
-    except FileNotFoundError:
-        return "ru"  # По умолчанию русский, если файла нет
-
-
-def save_language(lang):
-    """Функция сохранения языка в файл"""
-    os.makedirs("user_data", exist_ok=True)  # Создаём папку, если её нет
-    with open("user_data/lang_settings.json", "w") as f:
-        json.dump({"language": lang}, f)
 
 
 async def change_language():
