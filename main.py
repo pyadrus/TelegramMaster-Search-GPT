@@ -81,7 +81,8 @@ async def main():
             user_input = input(get_text("select_action"))
 
             if user_input == "1":
-                await search_and_save_telegram_groups()
+                messages_for_ai = input("Введите сообщение для ИИ: ")
+                await search_and_save_telegram_groups(user_input=messages_for_ai)
             elif user_input == "2":
                 print(f"[red] {get_text('settings_title')}\n\n"
                       f"[green] {get_text('settings_1')}\n"

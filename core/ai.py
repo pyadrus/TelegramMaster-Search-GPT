@@ -12,9 +12,7 @@ client_groq = AsyncGroq(api_key=get_groq_api_key())
 
 
 async def get_groq_response(user_input):
-    """
-    Получение ответа от Groq API.
-    """
+    """Получение ответа от Groq API."""
     try:
         # Формируем запрос к Groq API
         chat_completion = await client_groq.chat.completions.create(
