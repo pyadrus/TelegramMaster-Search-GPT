@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import asyncio
-import webbrowser
 import json
 import os
+import webbrowser
 
 from loguru import logger
 from rich import print
@@ -13,22 +13,25 @@ from localization import set_language, get_text
 
 logger.add('user_data/log/log.log')
 
-# Функция загрузки языка из файла
+
 def load_language():
+    """Функция загрузки языка из файла"""
     try:
         with open("user_data/lang_settings.json", "r") as f:
             return json.load(f).get("language", "ru")
     except FileNotFoundError:
         return "ru"  # По умолчанию русский, если файла нет
 
-# Функция сохранения языка в файл
+
 def save_language(lang):
+    """Функция сохранения языка в файл"""
     os.makedirs("user_data", exist_ok=True)  # Создаём папку, если её нет
     with open("user_data/lang_settings.json", "w") as f:
         json.dump({"language": lang}, f)
 
-# Функция для смены языка
+
 async def change_language():
+    """Функция для смены языка"""
     print(f"[yellow]{get_text('select_language')}:")
     print("[green]1 - English\n[green]2 - Русский")
     lang_choice = input("Enter choice (1 or 2): ").strip()
@@ -42,6 +45,7 @@ async def change_language():
         print(f"[green]{get_text('language_changed')}")
     else:
         print(f"[red]{get_text('invalid_language_choice')}")
+
 
 async def main():
     """
