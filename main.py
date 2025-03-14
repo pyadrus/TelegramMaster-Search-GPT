@@ -7,7 +7,7 @@ from loguru import logger
 from rich import print
 
 from core.file_utils import save_language, load_language
-from core.settings.settings import select_and_save_model, the_api_id_entry, the_api_hash_entry
+from core.settings import select_and_save_model, the_api_id_entry, the_api_hash_entry
 from core.telegram import search_and_save_telegram_groups
 from localization import set_language, get_text
 
