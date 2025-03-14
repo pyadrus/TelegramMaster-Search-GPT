@@ -10,30 +10,43 @@ from core.database.database import save_to_database, remove_duplicates
 from core.proxy_config import setup_proxy
 
 
+async def connect_to_telegram():
+    """Подключение к Telegram"""
+    client = TelegramClient(f"user_data/{username}", int(api_id), api_hash)
+    await client.connect()  # Подключение к Telegram
+    return client
+
+
+async def writing_file(ai_response):
+    """Функция записи в файл"""
+    # Сохранение ответа ИИ в файл words_list.txt
+    with open('user_data/words_list.txt', 'w', encoding='utf-8') as file:
+        file.write(ai_response)
+
+
+async def reading_file():
+    """Функция чтения файла"""
+    # Чтение списка ключевых слов из файла
+    with open('user_data/words_list.txt', 'r', encoding='utf-8') as file:
+        search_terms = file.readlines()
+    return search_terms
+
+
 async def search_and_save_telegram_groups(user_input):
     """Поиск и сохранение групп Telegram"""
     try:
         setup_proxy()  # Установка прокси
-        # Инициализация клиента Telegram
-        client = TelegramClient(f"user_data/{username}", int(api_id), api_hash)
-        await client.connect()  # Подключение к Telegram
+        client = connect_to_telegram()  # Инициализация клиента Telegram
         groups_set = set()  # Создание множества для уникальных результатов
-
-        ai_response = await get_groq_response(user_input)
-        print("Ответ от ИИ:", ai_response)
-        # Сохранение ответа ИИ в файл words_list.txt
-        with open('user_data/words_list.txt', 'w', encoding='utf-8') as file:
-            file.write(ai_response)
-        # Чтение списка ключевых слов из файла
-        with open('user_data/words_list.txt', 'r', encoding='utf-8') as file:
-            search_terms = file.readlines()
+        ai_response = await get_groq_response(user_input)  # Получение ответа от Groq API.
+        await writing_file(ai_response)  # Сохранение ответа ИИ в файл words_list.txt
+        search_terms = await reading_file()  # Чтение списка ключевых слов из файла
         # Очистка списка от пустых строк и пробелов
         search_terms = [term.strip() for term in search_terms if term.strip()]
         logger.info("Ключевые слова для поиска:", search_terms)
         for term in search_terms:
             # Поиск групп и каналов по ключевому слову
             await search_and_processing_found_groups(client, term, groups_set)
-
         # Преобразование множества в список для дальнейшей обработки
         groups_list = list(groups_set)
         for group in groups_list:
