@@ -3,11 +3,7 @@ import configparser
 from loguru import logger
 from rich import print
 
-
-async def saving_changes_in_config_ini(config):
-    """Сохранение изменений в config.ini"""
-    with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
-        config.write(configfile)
+from core.file_utils import saving_changes_in_config_ini
 
 
 async def read_config_file():

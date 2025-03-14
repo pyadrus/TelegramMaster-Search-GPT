@@ -30,3 +30,9 @@ def save_language(lang):
     os.makedirs("user_data", exist_ok=True)  # Создаём папку, если её нет
     with open("user_data/lang_settings.json", "w") as f:
         json.dump({"language": lang}, f)
+
+
+async def saving_changes_in_config_ini(config):
+    """Сохранение изменений в config.ini"""
+    with open('user_data/config.ini', 'w', encoding='utf-8') as configfile:
+        config.write(configfile)
