@@ -19,6 +19,18 @@ async def read_config_file():
     config.read('user_data/config.ini', encoding='utf-8')
     return config
 
+async def number_suggested_ai_groups():
+    """Ввод количества вариаций названий групп, предложенных искусственным интеллектом"""
+    config = await read_config_file()
+    # Получение ввода от пользователя
+    number_of_groups = input("Введите количество вариаций названий групп, предложенных искусственным интеллектом: ").strip()
+    # Обновляем или добавляем секцию ai
+    if not config.has_section('ai'):
+        config.add_section('ai')
+    config.set('ai', 'number_of_groups', number_of_groups)
+    # Сохранение изменений в config.ini
+    await saving_changes_in_config_ini(config)
+    print(f"Количество вариаций названий групп, предложенных искусственным интеллектом {number_of_groups} успешно сохранено в config.ini")
 
 async def the_api_hash_entry():
     """Запись api_hash в config.ini"""

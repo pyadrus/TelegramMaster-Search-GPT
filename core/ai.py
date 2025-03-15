@@ -3,7 +3,7 @@ from groq import AsyncGroq
 from loguru import logger
 from rich import print
 
-from core.config import get_groq_api_key, selectedmodel
+from core.config import get_groq_api_key, selectedmodel, number_of_groups
 from core.proxy_config import setup_proxy
 
 
@@ -18,7 +18,7 @@ async def get_groq_response(user_input):
             messages=[
                 {
                     "role": "user",
-                    "content": f"Придумай 50 уникальных и интересных ключевых словосочетаний для поиска в Telegram, на "
+                    "content": f"Придумай {number_of_groups} уникальных и интересных ключевых словосочетаний для поиска в Telegram, на "
                                f"основе текста пользователя: {user_input}. Верни результат в формате простого списка, "
                                f"каждое слово на новой строке, без нумерации и дополнительных символов.",
                 }

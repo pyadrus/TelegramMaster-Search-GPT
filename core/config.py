@@ -14,6 +14,8 @@ username = config['telegram_settings']['username']
 
 selectedmodel = config['Settings']['selectedmodel']
 
+number_of_groups = config['ai']['number_of_groups']
+
 # Загружаем переменные окружения из файла .env
 load_dotenv()
 

@@ -7,7 +7,7 @@ from loguru import logger
 from rich import print
 
 from core.file_utils import save_language, load_language
-from core.settings import select_and_save_model, the_api_id_entry, the_api_hash_entry
+from core.settings import select_and_save_model, the_api_id_entry, the_api_hash_entry, number_suggested_ai_groups
 from core.telegram import search_and_save_telegram_groups
 from localization import set_language, get_text
 
@@ -64,32 +64,33 @@ async def main():
                   f"[green] {get_text('menu_3')}\n")
             user_input = input(get_text("select_action"))
 
-            if user_input == "1":
+            if user_input == "1":  # Добавляем пункт меню для поиска по ключевым словам
                 messages_for_ai = input("Введите сообщение для ИИ: ")
                 await search_and_save_telegram_groups(user_input=messages_for_ai)
-            elif user_input == "2":
+            elif user_input == "2":  # Добавляем пункт меню для настроек
                 print(f"[red] {get_text('settings_title')}\n\n"
                       f"[green] {get_text('settings_1')}\n"
                       f"[green] {get_text('settings_2')}\n"
                       f"[green] {get_text('settings_3')}\n"
-                      f"[green] 4 - {get_text('change_language')}")  # Новый пункт меню
+                      f"[green] {get_text('settings_4')}\n"
+                      f"[green] {get_text('settings_5')}\n")  # Новый пункт меню
                 user_input = input(get_text("select_action"))
-                if user_input == "1":
+                if user_input == "1":  # Добавляем пункт меню для выбора модели
                     print(f"[red] {get_text('ai_model_select')}")
                     await select_and_save_model()
-                elif user_input == "2":
+                elif user_input == "2":  # Добавляем пункт меню для ввода API_ID
                     print(f"[red] {get_text('api_id_entry')}")
                     await the_api_id_entry()
-                elif user_input == "3":
+                elif user_input == "3":  # Добавляем пункт меню для ввода API_HASH
                     print(f"[red] {get_text('api_hash_entry')}")
                     await the_api_hash_entry()
-                elif user_input == "4":
+                elif user_input == "4":  # Добавляем пункт меню для смены языка
                     await change_language()
-            elif user_input == "3":
+                elif user_input == "5":  # Добавляем пункт ввода количества наименований групп, предложенных ИИ
+                    await number_suggested_ai_groups()
+            elif user_input == "3":  # Добавляем пункт меню для открытия документации
                 print(f"[red] {get_text('docs_open')}\n")
-                webbrowser.open(
-                    'https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki',
-                    new=2)
+                webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki', new=2)
             else:
                 print(f"[red] {get_text('invalid_input')}")
     except Exception as e:
