@@ -19,11 +19,10 @@ async def read_config_file():
     config.read('user_data/config.ini', encoding='utf-8')
     return config
 
-async def number_suggested_ai_groups():
+
+async def number_suggested_ai_groups(number_of_groups):
     """Ввод количества вариаций названий групп, предложенных искусственным интеллектом"""
     config = await read_config_file()
-    # Получение ввода от пользователя
-    number_of_groups = input("Введите количество вариаций названий групп, предложенных искусственным интеллектом: ").strip()
     # Обновляем или добавляем секцию ai
     if not config.has_section('ai'):
         config.add_section('ai')
@@ -32,11 +31,10 @@ async def number_suggested_ai_groups():
     await saving_changes_in_config_ini(config)
     print(f"Количество вариаций названий групп, предложенных искусственным интеллектом {number_of_groups} успешно сохранено в config.ini")
 
-async def the_api_hash_entry():
+
+async def the_api_hash_entry(api_hash):
     """Запись api_hash в config.ini"""
     config = await read_config_file()
-    # Получение ввода от пользователя
-    api_hash = input("Введите api_hash: ").strip()
     # Обновляем или добавляем секцию telegram_settings
     if not config.has_section('telegram_settings'):
         config.add_section('telegram_settings')
@@ -46,11 +44,9 @@ async def the_api_hash_entry():
     print(f"api_hash {api_hash} успешно сохранен в config.ini")
 
 
-async def the_api_id_entry():
+async def the_api_id_entry(api_id):
     """Запись api_id в config.ini"""
     config = await read_config_file()
-    # Получение ввода от пользователя
-    api_id = input("Введите api_id: ").strip()
     # Обновляем или добавляем секцию telegram_settings
     if not config.has_section('telegram_settings'):
         config.add_section('telegram_settings')
@@ -60,7 +56,7 @@ async def the_api_id_entry():
     print(f"api_id {api_id} успешно сохранен в config.ini")
 
 
-async def select_and_save_model():
+async def select_and_save_model(choice):
     try:
         ai_list = {
             '1': 'qwen-2.5-32b',
@@ -82,14 +78,11 @@ async def select_and_save_model():
             '17': 'mistral-saba-24b',
             '18': 'mixtral-8x7b-32768',
         }
-
         config = await read_config_file()
         # Вывод списка моделей
         print("Выберите модель ИИ:")
         for key, value in ai_list.items():
             print(f"{key}: {value}")
-        # Получение ввода от пользователя
-        choice = input("Введите номер модели: ").strip()
         if choice in ai_list:
             selected_model = ai_list[choice]
             # Обновляем или добавляем секцию Settings

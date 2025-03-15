@@ -9,7 +9,7 @@ from rich import print
 from core.file_utils import save_language, load_language
 from core.settings import select_and_save_model, the_api_id_entry, the_api_hash_entry, number_suggested_ai_groups
 from core.telegram import search_and_save_telegram_groups
-from localization import set_language, get_text
+from core.localization import set_language, get_text
 
 logger.add('user_data/log/log.log')
 
@@ -77,17 +77,21 @@ async def main():
                 user_input = input(get_text("select_action"))
                 if user_input == "1":  # Добавляем пункт меню для выбора модели
                     print(f"[red] {get_text('ai_model_select')}")
-                    await select_and_save_model()
+                    choice = input("Введите номер модели: ").strip()
+                    await select_and_save_model(choice=choice)
                 elif user_input == "2":  # Добавляем пункт меню для ввода API_ID
                     print(f"[red] {get_text('api_id_entry')}")
-                    await the_api_id_entry()
+                    api_id = input("Введите api_id: ").strip()
+                    await the_api_id_entry(api_id=api_id)
                 elif user_input == "3":  # Добавляем пункт меню для ввода API_HASH
                     print(f"[red] {get_text('api_hash_entry')}")
-                    await the_api_hash_entry()
+                    api_hash = input("Введите api_hash: ").strip()
+                    await the_api_hash_entry(api_hash=api_hash)
                 elif user_input == "4":  # Добавляем пункт меню для смены языка
                     await change_language()
                 elif user_input == "5":  # Добавляем пункт ввода количества наименований групп, предложенных ИИ
-                    await number_suggested_ai_groups()
+                    number_of_groups = input("Введите количество вариаций названий групп, предложенных искусственным интеллектом: ").strip()
+                    await number_suggested_ai_groups(number_of_groups=number_of_groups)
             elif user_input == "3":  # Добавляем пункт меню для открытия документации
                 print(f"[red] {get_text('docs_open')}\n")
                 webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki', new=2)
