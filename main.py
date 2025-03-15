@@ -7,9 +7,9 @@ from loguru import logger
 from rich import print
 
 from core.file_utils import save_language, load_language
-from core.settings import select_and_save_model, the_api_id_entry, the_api_hash_entry, number_suggested_ai_groups
-from core.telegram import search_and_save_telegram_groups
 from core.localization import set_language, get_text
+from core.settings import select_and_save_model, update_config_value
+from core.telegram import search_and_save_telegram_groups
 
 logger.add('user_data/log/log.log')
 
@@ -78,20 +78,20 @@ async def main():
                 if user_input == "1":  # Добавляем пункт меню для выбора модели
                     print(f"[red] {get_text('ai_model_select')}")
                     choice = input("Введите номер модели: ").strip()
-                    await select_and_save_model(choice=choice)
+                    await select_and_save_model(section='Settings', option='selectedmodel', choice=choice)
                 elif user_input == "2":  # Добавляем пункт меню для ввода API_ID
                     print(f"[red] {get_text('api_id_entry')}")
                     api_id = input("Введите api_id: ").strip()
-                    await the_api_id_entry(api_id=api_id)
+                    await update_config_value(section='telegram_settings', option='api_id', value=api_id)
                 elif user_input == "3":  # Добавляем пункт меню для ввода API_HASH
                     print(f"[red] {get_text('api_hash_entry')}")
                     api_hash = input("Введите api_hash: ").strip()
-                    await the_api_hash_entry(api_hash=api_hash)
+                    await update_config_value(section='telegram_settings', option='api_hash', value=api_hash)
                 elif user_input == "4":  # Добавляем пункт меню для смены языка
                     await change_language()
                 elif user_input == "5":  # Добавляем пункт ввода количества наименований групп, предложенных ИИ
                     number_of_groups = input("Введите количество вариаций названий групп, предложенных искусственным интеллектом: ").strip()
-                    await number_suggested_ai_groups(number_of_groups=number_of_groups)
+                    await update_config_value(section='ai', option='number_of_groups', value=number_of_groups)
             elif user_input == "3":  # Добавляем пункт меню для открытия документации
                 print(f"[red] {get_text('docs_open')}\n")
                 webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki', new=2)

@@ -20,43 +20,7 @@ async def read_config_file():
     return config
 
 
-async def number_suggested_ai_groups(number_of_groups):
-    """Ввод количества вариаций названий групп, предложенных искусственным интеллектом"""
-    config = await read_config_file()
-    # Обновляем или добавляем секцию ai
-    if not config.has_section('ai'):
-        config.add_section('ai')
-    config.set('ai', 'number_of_groups', number_of_groups)
-    # Сохранение изменений в config.ini
-    await saving_changes_in_config_ini(config)
-    print(f"Количество вариаций названий групп, предложенных искусственным интеллектом {number_of_groups} успешно сохранено в config.ini")
-
-
-async def the_api_hash_entry(api_hash):
-    """Запись api_hash в config.ini"""
-    config = await read_config_file()
-    # Обновляем или добавляем секцию telegram_settings
-    if not config.has_section('telegram_settings'):
-        config.add_section('telegram_settings')
-    config.set('telegram_settings', 'api_hash', api_hash)
-    # Сохранение изменений в config.ini
-    await saving_changes_in_config_ini(config)
-    print(f"api_hash {api_hash} успешно сохранен в config.ini")
-
-
-async def the_api_id_entry(api_id):
-    """Запись api_id в config.ini"""
-    config = await read_config_file()
-    # Обновляем или добавляем секцию telegram_settings
-    if not config.has_section('telegram_settings'):
-        config.add_section('telegram_settings')
-    config.set('telegram_settings', 'api_id', api_id)
-    # Сохранение изменений в config.ini
-    await saving_changes_in_config_ini(config)
-    print(f"api_id {api_id} успешно сохранен в config.ini")
-
-
-async def select_and_save_model(choice):
+async def select_and_save_model(section, option, choice):
     try:
         ai_list = {
             '1': 'qwen-2.5-32b',
@@ -78,21 +42,28 @@ async def select_and_save_model(choice):
             '17': 'mistral-saba-24b',
             '18': 'mixtral-8x7b-32768',
         }
-        config = await read_config_file()
+
         # Вывод списка моделей
         print("Выберите модель ИИ:")
         for key, value in ai_list.items():
             print(f"{key}: {value}")
         if choice in ai_list:
-            selected_model = ai_list[choice]
-            # Обновляем или добавляем секцию Settings
-            if not config.has_section('Settings'):
-                config.add_section('Settings')
-            config.set('Settings', 'selectedmodel', selected_model)
-            # Сохранение изменений в config.ini
-            await saving_changes_in_config_ini(config)
-            print(f"Модель {selected_model} успешно сохранена в config.ini")
+            value = ai_list[choice]
+
+            await update_config_value(section, option, value)
+
         else:
             print("Ошибка: некорректный выбор.")
     except Exception as e:
         logger.exception(e)
+
+
+async def update_config_value(section, option, value):
+    """Ввод количества вариаций названий групп, предложенных искусственным интеллектом"""
+    config = await read_config_file()
+    # Обновляем или добавляем секцию ai
+    if not config.has_section(section):
+        config.add_section(section)
+    config.set(section, option, value)
+    # Сохранение изменений в config.ini
+    await saving_changes_in_config_ini(config)
