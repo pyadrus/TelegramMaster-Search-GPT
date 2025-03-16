@@ -6,6 +6,7 @@ import webbrowser
 from loguru import logger
 from rich import print
 
+from core.config import program_version, date_of_program_change
 from core.file_utils import save_language, load_language
 from core.localization import set_language, get_text
 from core.settings import select_and_save_model, update_config_value
@@ -58,7 +59,10 @@ async def main():
 
         # Основное меню
         while True:  # Добавляем цикл для возврата в меню
-            print(f"[red] {get_text('title')}\n\n"
+            print(f"[red] {get_text('title')}\n"
+                  f"[red] {program_version}\n"
+                  f"[red] {date_of_program_change}\n\n"
+                  
                   f"[green] {get_text('menu_1')}\n"
                   f"[green] {get_text('menu_2')}\n"
                   f"[green] {get_text('menu_3')}\n")

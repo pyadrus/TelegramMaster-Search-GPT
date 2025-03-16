@@ -11,10 +11,10 @@ config.read('user_data/config.ini')
 api_id = config['telegram_settings']['api_id']
 api_hash = config['telegram_settings']['api_hash']
 username = config['telegram_settings']['username']
-
 selectedmodel = config['Settings']['selectedmodel']
-
 number_of_groups = config['ai']['number_of_groups']
+program_version = config['program_version']['program_version']
+date_of_program_change = config['date_of_program_change']['date_of_program_change']
 
 # Загружаем переменные окружения из файла .env
 load_dotenv()
