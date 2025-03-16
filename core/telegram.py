@@ -70,6 +70,7 @@ async def search_and_save_telegram_groups(user_input: str) -> None:
         # Обработка и сохранение результатов
         await converting_into_a_list_for_further_processing(groups_set)
         remove_duplicates()  # Удаление дубликатов из базы данных
+        client.disconnect()  # Отключение от Telegram
 
     except Exception as e:
         logger.exception(e)

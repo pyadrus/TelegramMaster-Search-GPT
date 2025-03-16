@@ -3,7 +3,7 @@ from groq import AsyncGroq
 from loguru import logger
 from rich import print
 
-from core.config import get_groq_api_key, selectedmodel, number_of_groups
+from core.config import selectedmodel, number_of_groups, GROQ_API_KEY
 from core.proxy_config import setup_proxy
 
 
@@ -11,7 +11,7 @@ async def get_groq_response(user_input):
     """Получение ответа от Groq API."""
     setup_proxy()  # Установка прокси
     # Инициализация Groq клиента
-    client_groq = AsyncGroq(api_key=get_groq_api_key())
+    client_groq = AsyncGroq(api_key=GROQ_API_KEY)
     try:
         # Формируем запрос к Groq API
         chat_completion = await client_groq.chat.completions.create(
