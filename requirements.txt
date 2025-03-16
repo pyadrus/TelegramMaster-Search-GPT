@@ -2,5 +2,4 @@ Telethon
 configparser
 loguru
 groq
-python-dotenv
 rich
