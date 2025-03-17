@@ -8,6 +8,7 @@ from rich import print
 
 from core.config import program_version, date_of_program_change
 from core.file_utils import save_language, load_language
+from core.getting_data import getting_data_from_database
 from core.localization import set_language, get_text
 from core.settings import select_and_save_model, update_config_value
 from core.telegram import search_and_save_telegram_groups
@@ -62,10 +63,11 @@ async def main():
             print(f"[red] {get_text('title')}\n"
                   f"[red] {program_version}\n"
                   f"[red] {date_of_program_change}\n\n"
-                  
+
                   f"[green] {get_text('menu_1')}\n"
                   f"[green] {get_text('menu_2')}\n"
-                  f"[green] {get_text('menu_3')}\n")
+                  f"[green] {get_text('menu_3')}\n"
+                  f"[green] {get_text('menu_4')}\n")
             user_input = input(get_text("select_action"))
 
             if user_input == "1":  # Добавляем пункт меню для поиска по ключевым словам
@@ -94,11 +96,16 @@ async def main():
                 elif user_input == "4":  # Добавляем пункт меню для смены языка
                     await change_language()
                 elif user_input == "5":  # Добавляем пункт ввода количества наименований групп, предложенных ИИ
-                    number_of_groups = input("Введите количество вариаций названий групп, предложенных искусственным интеллектом: ").strip()
+                    number_of_groups = input(
+                        "Введите количество вариаций названий групп, предложенных искусственным интеллектом: ").strip()
                     await update_config_value(section='ai', option='number_of_groups', value=number_of_groups)
             elif user_input == "3":  # Добавляем пункт меню для открытия документации
                 print(f"[red] {get_text('docs_open')}\n")
                 webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki', new=2)
+
+            elif user_input == "4":  # Получение спарсенных данных
+                await getting_data_from_database()
+
             else:
                 print(f"[red] {get_text('invalid_input')}")
     except Exception as e:

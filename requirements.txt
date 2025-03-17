@@ -1,5 +1,6 @@
-Telethon
-configparser
-loguru
-groq
-rich
+Telethon~=1.36.0
+configparser~=7.0.1
+loguru~=0.6.0
+groq~=0.15.0
+rich~=13.7.1
+openpyxl~=3.1.5

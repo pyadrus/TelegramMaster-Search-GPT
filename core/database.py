@@ -7,6 +7,7 @@ path_database = 'user_data/your_database.db'
 
 
 def save_to_database(data_tuple):
+    """Запись полученных групп и каналов в базу данных"""
     try:
         with sqlite3.connect(path_database) as conn:
             cursor = conn.cursor()
