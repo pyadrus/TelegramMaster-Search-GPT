@@ -7,7 +7,6 @@ from core.database import get_all_groups
 async def getting_data_from_database():
     """Получение данных из базы данных."""
     data = get_all_groups()
-
     # Создание новой рабочей книги
     workbook = openpyxl.Workbook()
     sheet = workbook.active
