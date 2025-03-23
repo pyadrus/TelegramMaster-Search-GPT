@@ -6,7 +6,13 @@ translations = {
         "menu_2": "2 - Настройки",
         "menu_3": "3 - Документация",
         "menu_4": "4 - Получение спарсеных данных",
+
         "select_action": "Выберите действие: ",
+        "select_action_1": "Введите номер модели: ",
+        "select_action_2": "Введите api_id: ",
+        "select_action_3": "Введите api_hash: ",
+        "select_action_4": "Введите количество вариаций названий групп, предложенных искусственным интеллектом: ",
+
         "settings_title": "Настройки",
         "settings_1": "1 - выбор модели ИИ",
         "settings_2": "2 - запись api_id",
@@ -29,7 +35,13 @@ translations = {
         "menu_2": "2 - Settings",
         "menu_3": "3 - Documentation",
         "menu_4": "4 - Get parsed data",
+
         "select_action": "Select an action: ",
+        "select_action_1": "Enter the model number:",
+        "select_action_2": "Enter the api_id:",
+        "select_action_3": "Enter api_hash:",
+        "select_action_4": "Enter the number of variations of the names of the groups suggested by the artificial intelligence:",
+
         "settings_title": "Settings",
         "settings_1": "1 - Select AI model",
         "settings_2": "2 - Enter api_id",

@@ -83,21 +83,20 @@ async def main():
                 user_input = input(get_text("select_action"))
                 if user_input == "1":  # Добавляем пункт меню для выбора модели
                     print(f"[red] {get_text('ai_model_select')}")
-                    choice = input("Введите номер модели: ").strip()
+                    choice = input(get_text("select_action_1")).strip()
                     await select_and_save_model(section='Settings', option='selectedmodel', choice=choice)
                 elif user_input == "2":  # Добавляем пункт меню для ввода API_ID
                     print(f"[red] {get_text('api_id_entry')}")
-                    api_id = input("Введите api_id: ").strip()
+                    api_id = input(get_text("select_action_2")).strip()
                     await update_config_value(section='telegram_settings', option='api_id', value=api_id)
                 elif user_input == "3":  # Добавляем пункт меню для ввода API_HASH
                     print(f"[red] {get_text('api_hash_entry')}")
-                    api_hash = input("Введите api_hash: ").strip()
+                    api_hash = input(get_text("select_action_3")).strip()
                     await update_config_value(section='telegram_settings', option='api_hash', value=api_hash)
                 elif user_input == "4":  # Добавляем пункт меню для смены языка
                     await change_language()
                 elif user_input == "5":  # Добавляем пункт ввода количества наименований групп, предложенных ИИ
-                    number_of_groups = input(
-                        "Введите количество вариаций названий групп, предложенных искусственным интеллектом: ").strip()
+                    number_of_groups = input(get_text("select_action_4")).strip()
                     await update_config_value(section='ai', option='number_of_groups', value=number_of_groups)
             elif user_input == "3":  # Добавляем пункт меню для открытия документации
                 print(f"[red] {get_text('docs_open')}\n")
