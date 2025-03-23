@@ -33,6 +33,34 @@ async def change_language():
         print(f"[red]{get_text('invalid_language_choice')}")
 
 
+async def menu_settings():
+    """Меню настроек"""
+    print(f"[red] {get_text('settings_title')}\n\n"
+          f"[green] {get_text('settings_1')}\n"
+          f"[green] {get_text('settings_2')}\n"
+          f"[green] {get_text('settings_3')}\n"
+          f"[green] {get_text('settings_4')}\n"
+          f"[green] {get_text('settings_5')}\n")  # Новый пункт меню
+    user_input = input(get_text("select_action"))
+    if user_input == "1":  # Добавляем пункт меню для выбора модели
+        print(f"[red] {get_text('ai_model_select')}")
+        choice = input(get_text("select_action_1")).strip()
+        await select_and_save_model(section='Settings', option='selectedmodel', choice=choice)
+    elif user_input == "2":  # Добавляем пункт меню для ввода API_ID
+        print(f"[red] {get_text('api_id_entry')}")
+        api_id = input(get_text("select_action_2")).strip()
+        await update_config_value(section='telegram_settings', option='api_id', value=api_id)
+    elif user_input == "3":  # Добавляем пункт меню для ввода API_HASH
+        print(f"[red] {get_text('api_hash_entry')}")
+        api_hash = input(get_text("select_action_3")).strip()
+        await update_config_value(section='telegram_settings', option='api_hash', value=api_hash)
+    elif user_input == "4":  # Добавляем пункт меню для смены языка
+        await change_language()
+    elif user_input == "5":  # Добавляем пункт ввода количества наименований групп, предложенных ИИ
+        number_of_groups = input(get_text("select_action_4")).strip()
+        await update_config_value(section='ai', option='number_of_groups', value=number_of_groups)
+
+
 async def main():
     """
     Основная функция, выполняющая поиск по ключевым словам и сохранение найденных групп/каналов в базу данных.
@@ -69,42 +97,16 @@ async def main():
                   f"[green] {get_text('menu_3')}\n"
                   f"[green] {get_text('menu_4')}\n")
             user_input = input(get_text("select_action"))
-
             if user_input == "1":  # Добавляем пункт меню для поиска по ключевым словам
                 messages_for_ai = input("Введите сообщение для ИИ: ")
                 await search_and_save_telegram_groups(user_input=messages_for_ai)
             elif user_input == "2":  # Добавляем пункт меню для настроек
-                print(f"[red] {get_text('settings_title')}\n\n"
-                      f"[green] {get_text('settings_1')}\n"
-                      f"[green] {get_text('settings_2')}\n"
-                      f"[green] {get_text('settings_3')}\n"
-                      f"[green] {get_text('settings_4')}\n"
-                      f"[green] {get_text('settings_5')}\n")  # Новый пункт меню
-                user_input = input(get_text("select_action"))
-                if user_input == "1":  # Добавляем пункт меню для выбора модели
-                    print(f"[red] {get_text('ai_model_select')}")
-                    choice = input(get_text("select_action_1")).strip()
-                    await select_and_save_model(section='Settings', option='selectedmodel', choice=choice)
-                elif user_input == "2":  # Добавляем пункт меню для ввода API_ID
-                    print(f"[red] {get_text('api_id_entry')}")
-                    api_id = input(get_text("select_action_2")).strip()
-                    await update_config_value(section='telegram_settings', option='api_id', value=api_id)
-                elif user_input == "3":  # Добавляем пункт меню для ввода API_HASH
-                    print(f"[red] {get_text('api_hash_entry')}")
-                    api_hash = input(get_text("select_action_3")).strip()
-                    await update_config_value(section='telegram_settings', option='api_hash', value=api_hash)
-                elif user_input == "4":  # Добавляем пункт меню для смены языка
-                    await change_language()
-                elif user_input == "5":  # Добавляем пункт ввода количества наименований групп, предложенных ИИ
-                    number_of_groups = input(get_text("select_action_4")).strip()
-                    await update_config_value(section='ai', option='number_of_groups', value=number_of_groups)
+                await menu_settings()
             elif user_input == "3":  # Добавляем пункт меню для открытия документации
                 print(f"[red] {get_text('docs_open')}\n")
                 webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki', new=2)
-
             elif user_input == "4":  # Получение спарсенных данных
                 await getting_data_from_database()
-
             else:
                 print(f"[red] {get_text('invalid_input')}")
     except Exception as e:
