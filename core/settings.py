@@ -1,23 +1,8 @@
-import configparser
-
 from loguru import logger
 from rich import print
 
+from core.config import read_config_file
 from core.file_utils import saving_changes_in_config_ini
-
-
-async def read_config_file():
-    """
-    Чтение данных из config.ini
-
-    Функция считывает данные из файла конфигурации 'config.ini', который находится в директории 'user_data'.
-    Файл конфигурации должен быть в кодировке 'utf-8'.
-
-    :return: Объект ConfigParser, содержащий данные из файла конфигурации.
-    """
-    config = configparser.ConfigParser()
-    config.read('user_data/config.ini', encoding='utf-8')
-    return config
 
 
 async def select_and_save_model(section, option, choice):

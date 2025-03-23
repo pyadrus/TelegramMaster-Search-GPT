@@ -1,6 +1,21 @@
 # -*- coding: utf-8 -*-
 import configparser
 
+
+async def read_config_file():
+    """
+    Чтение данных из config.ini
+
+    Функция считывает данные из файла конфигурации 'config.ini', который находится в директории 'user_data'.
+    Файл конфигурации должен быть в кодировке 'utf-8'.
+
+    :return: Объект ConfigParser, содержащий данные из файла конфигурации.
+    """
+    config = configparser.ConfigParser()
+    config.read('user_data/config.ini', encoding='utf-8')
+    return config
+
+
 # Чтение конфигурации из config.ini
 config = configparser.ConfigParser()
 config.read('user_data/config.ini')
