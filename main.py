@@ -17,7 +17,7 @@ logger.add('user_data/log/log.log')
 
 
 async def change_language():
-    """Функция для смены языка"""
+    """Функция для смены языка в настройках программы"""
     print(f"[yellow]{get_text('select_language')}:")
     print("[green]1 - English\n[green]2 - Русский")
     lang_choice = input("Enter choice (1 or 2): ").strip()

@@ -6,6 +6,18 @@ from loguru import logger
 path_database = 'user_data/your_database.db'
 
 
+def get_all_groups():
+    """Получение всех групп из базы данных."""
+    # Создание подключения к базе данных
+    with sqlite3.connect(path_database) as conn:
+        cursor = conn.cursor()
+        # Получение всех групп из таблицы groups
+        cursor.execute("SELECT * FROM groups")
+        # Сохранение изменений и закрытие соединения
+        data = cursor.fetchall()
+    return data
+
+
 def save_to_database(data_tuple):
     """Запись полученных групп и каналов в базу данных"""
     try:

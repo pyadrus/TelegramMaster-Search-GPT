@@ -1,19 +1,12 @@
 # -*- coding: utf-8 -*-
-import sqlite3
-
 import openpyxl
 
-from core.database import path_database
+from core.database import get_all_groups
 
 
 async def getting_data_from_database():
     """Получение данных из базы данных."""
-    with sqlite3.connect(path_database) as conn:
-        cursor = conn.cursor()
-        # Получение всех групп из таблицы groups
-        cursor.execute("SELECT * FROM groups")
-        # Сохранение изменений и закрытие соединения
-        data = cursor.fetchall()
+    data = get_all_groups()
 
     # Создание новой рабочей книги
     workbook = openpyxl.Workbook()
