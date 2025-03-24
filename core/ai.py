@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
+from core.config import selectedmodel, number_of_groups, GROQ_API_KEY
+from core.proxy_config import setup_proxy
 from groq import AsyncGroq
 from loguru import logger
 from rich import print
-
-from core.config import selectedmodel, number_of_groups, GROQ_API_KEY
-from core.proxy_config import setup_proxy
 
 
 async def get_groq_response(user_input):

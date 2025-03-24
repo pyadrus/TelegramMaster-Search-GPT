@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from loguru import logger
-from rich import print
-
 from core.config import read_config_file
 from core.file_utils import saving_changes_in_config_ini
+from loguru import logger
+from rich import print
 
 
 async def select_and_save_model(section, option, choice):
