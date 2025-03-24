@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-from core.config import selectedmodel, number_of_groups, GROQ_API_KEY
-from core.proxy_config import setup_proxy
 from groq import AsyncGroq
 from loguru import logger
 from rich import print
+
+from core.config import selectedmodel, number_of_groups, GROQ_API_KEY
+from core.localization import get_text
+from core.proxy_config import setup_proxy
 
 
 async def get_groq_response(user_input):
@@ -26,7 +28,7 @@ async def get_groq_response(user_input):
         )
         # Получаем ответ от ИИ
         ai_response = chat_completion.choices[0].message.content
-        print("Ответ от ИИ:", ai_response)
+        print(f"{get_text('ai_model_select_1')}", ai_response)
         return ai_response
     except Exception as e:
         logger.exception(e)

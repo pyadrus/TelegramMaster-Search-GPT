@@ -2,6 +2,7 @@
 translations = {
     "ru": {
         "title": "TelegramMaster-Search-GPT",
+
         "menu_1": "1 - Перебор данных",
         "menu_2": "2 - Настройки",
         "menu_3": "3 - Документация",
@@ -14,12 +15,16 @@ translations = {
         "select_action_4": "Введите количество вариаций названий групп, предложенных искусственным интеллектом: ",
 
         "settings_title": "Настройки",
+
         "settings_1": "1 - выбор модели ИИ",
         "settings_2": "2 - запись api_id",
         "settings_3": "3 - запись api_hash",
         "settings_4": "4 - Сменить язык",
         "settings_5": "5 - Сменить количество предложенных групп ИИ",
+
         "ai_model_select": "Выбор модели ИИ",
+        "ai_model_select_1": "Ответ от ИИ:",
+
         "api_id_entry": "Запись api_id",
         "api_hash_entry": "Запись api_hash",
         "docs_open": "Открыть документацию",
@@ -27,10 +32,13 @@ translations = {
         "select_language": "Выберите язык",
         "invalid_language_choice": "Некорректный выбор языка, используется сохранённый",
         "change_language": "Сменить язык",
-        "language_changed": "Язык успешно изменён"
+        "language_changed": "Язык успешно изменён",
+
+
     },
     "en": {
         "title": "TelegramMaster-Search-GPT",
+
         "menu_1": "1 - Data Processing",
         "menu_2": "2 - Settings",
         "menu_3": "3 - Documentation",
@@ -43,12 +51,16 @@ translations = {
         "select_action_4": "Enter the number of variations of the names of the groups suggested by the artificial intelligence:",
 
         "settings_title": "Settings",
+
         "settings_1": "1 - Select AI model",
         "settings_2": "2 - Enter api_id",
         "settings_3": "3 - Enter api_hash",
         "settings_4": "4 - Change language",
         "settings_5": "5 - Change the number of suggested AI groups",
+
         "ai_model_select": "Select AI Model",
+        "ai_model_select_1": "Answer from AI:",
+
         "api_id_entry": "Enter api_id",
         "api_hash_entry": "Enter api_hash",
         "docs_open": "Open Documentation",
