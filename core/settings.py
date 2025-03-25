@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from core.config import read_config_file
-from core.file_utils import saving_changes_in_config_ini
 from loguru import logger
 from rich import print
+
+from core.config import read_config_file
+from core.file_utils import saving_changes_in_config_ini
+from core.localization import get_text
 
 
 async def select_and_save_model(section, option, choice):
@@ -29,7 +31,7 @@ async def select_and_save_model(section, option, choice):
         }
 
         # Вывод списка моделей
-        print("Выберите модель ИИ:")
+        print(f"{get_text('ai_model_select_2')}")
         for key, value in ai_list.items():
             print(f"{key}: {value}")
         if choice in ai_list:
@@ -38,7 +40,7 @@ async def select_and_save_model(section, option, choice):
             await update_config_value(section, option, value)
 
         else:
-            print("Ошибка: некорректный выбор.")
+            print(f"{get_text('ai_model_select_3')}")
     except Exception as e:
         logger.exception(e)
 

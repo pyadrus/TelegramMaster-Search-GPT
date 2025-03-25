@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-from core.ai import get_groq_response
-from core.config import username, api_id, api_hash
-from core.database import save_to_database, remove_duplicates
-from core.file_utils import writing_file, reading_file
 from loguru import logger
 from rich import print
 from telethon.errors import AuthKeyUnregisteredError, FloodWaitError
 from telethon.sync import TelegramClient, functions
+
+from core.ai import get_groq_response
+from core.config import username, api_id, api_hash
+from core.database import save_to_database, remove_duplicates
+from core.file_utils import writing_file, reading_file
+from core.localization import get_text
 
 
 async def connect_to_telegram() -> TelegramClient:
@@ -39,10 +41,10 @@ async def search_and_processing_found_groups(client, term, groups_set) -> None:
             )
             groups_set.add(group_info)  # Добавление информации в множество
     except AuthKeyUnregisteredError as e:
-        print(f"Ошибка аккаунта: {e}")
+        print(f"{get_text('error')} {e}")
         return
     except FloodWaitError as e:
-        print(f"Ошибка флуда: {e}")
+        print(f"{get_text('error_1')} {e}")
         return
 
 
@@ -59,7 +61,7 @@ async def search_and_save_telegram_groups(user_input: str) -> None:
 
         # Очистка списка от пустых строк и пробелов
         search_terms = [term.strip() for term in search_terms if term.strip()]
-        logger.info("Ключевые слова для поиска:", search_terms)
+        logger.info(f"{get_text('messages')}", search_terms)
 
         # Поиск групп по каждому термину
         for term in search_terms:

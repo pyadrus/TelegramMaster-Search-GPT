@@ -98,7 +98,7 @@ async def main():
                   f"[green] {get_text('menu_4')}\n")
             user_input = input(get_text("select_action"))
             if user_input == "1":  # Добавляем пункт меню для поиска по ключевым словам
-                messages_for_ai = input("Введите сообщение для ИИ: ")
+                messages_for_ai = input(get_text("ai_model_select_4"))
                 await search_and_save_telegram_groups(user_input=messages_for_ai)
             elif user_input == "2":  # Добавляем пункт меню для настроек
                 await menu_settings()

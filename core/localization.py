@@ -24,6 +24,9 @@ translations = {
 
         "ai_model_select": "Выбор модели ИИ",
         "ai_model_select_1": "Ответ от ИИ:",
+        "ai_model_select_2": "Выберите модель ИИ:",
+        "ai_model_select_3": "Ошибка: некорректный выбор.",
+        "ai_model_select_4": "Введите сообщение для ИИ: ",
 
         "api_id_entry": "Запись api_id",
         "api_hash_entry": "Запись api_hash",
@@ -34,6 +37,15 @@ translations = {
         "change_language": "Сменить язык",
         "language_changed": "Язык успешно изменён",
 
+        "error": "Ошибка аккаунта: ",
+        "error_1": "Ошибка флуда: ",
+
+        "messages": "Ключевые слова для поиска:",
+
+        "ai_prompt": "Придумай",
+        "ai_prompt_unique_keywords": "уникальных и интересных ключевых словосочетаний для поиска в Telegram,",
+        "ai_prompt_based_on": "на основе текста пользователя:",
+        "ai_prompt_return_format": "Верни результат в формате простого списка, каждое слово на новой строке, без нумерации и дополнительных символов.",
 
     },
     "en": {
@@ -60,6 +72,9 @@ translations = {
 
         "ai_model_select": "Select AI Model",
         "ai_model_select_1": "Answer from AI:",
+        "ai_model_select_2": "Choose an AI model:",
+        "ai_model_select_3": "Error: incorrect selection.",
+        "ai_model_select_4": "Введите сообщение для ИИ: ",
 
         "api_id_entry": "Enter api_id",
         "api_hash_entry": "Enter api_hash",
@@ -68,7 +83,18 @@ translations = {
         "select_language": "Select language",
         "invalid_language_choice": "Invalid language choice, using saved language",
         "change_language": "Change language",
-        "language_changed": "Language successfully changed"
+        "language_changed": "Language successfully changed",
+
+        "error": "Account error:",
+        "error_1": "Flood error:",
+
+        "messages": "Search keywords:",
+
+        "ai_prompt": "Come up with",
+        "ai_prompt_unique_keywords": "unique and interesting keyword phrases for searching in Telegram,",
+        "ai_prompt_based_on": "based on the user's text:",
+        "ai_prompt_return_format": "Return the result as a simple list, each word on a new line, without numbering or extra symbols.",
+
     }
 }
 
