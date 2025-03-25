@@ -10,6 +10,7 @@ from core.config import program_version, date_of_program_change
 from core.file_utils import save_language, load_language
 from core.getting_data import getting_data_from_database
 from core.localization import set_language, get_text
+from core.logging_in import loging
 from core.settings import select_and_save_model, update_config_value
 from core.telegram import search_and_save_telegram_groups
 
@@ -35,6 +36,7 @@ async def change_language():
 
 async def menu_settings():
     """Меню настроек"""
+    await loging()
     print(f"[red] {get_text('settings_title')}\n\n"
           f"[green] {get_text('settings_1')}\n"
           f"[green] {get_text('settings_2')}\n"

@@ -27,6 +27,8 @@ number_of_groups = config['ai']['number_of_groups']
 program_version = config['program_version']['program_version']
 date_of_program_change = config['date_of_program_change']['date_of_program_change']
 
+program_name = config['program_name']['program_name']
+
 GROQ_API_KEY = config['API_Groq']['GROQ_API_KEY']
 
 proxy_user = config['proxy_data']['user']
