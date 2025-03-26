@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
 import webbrowser
 
 import flet as ft
@@ -8,7 +7,7 @@ from rich import print
 
 from core.buttons import create_buttons
 from core.config import program_version, date_of_program_change, program_name
-from core.file_utils import save_language, load_language
+from core.file_utils import save_language
 from core.getting_data import getting_data_from_database
 from core.localization import set_language, get_text
 from core.logging_in import loging
@@ -19,21 +18,37 @@ from core.views import TITLE_FONT_WEIGHT, PRIMARY_COLOR, view_with_elements, pro
 logger.add('user_data/log/log.log')
 
 
-async def change_language():
+async def change_language(page: ft.Page):
     """Функция для смены языка в настройках программы"""
-    print(f"[yellow]{get_text('select_language')}:")
-    print("[green]1 - English\n[green]2 - Русский")
-    lang_choice = input("Enter choice (1 or 2): ").strip()
-    if lang_choice == "1":
-        set_language("en")
-        save_language("en")
-        print(f"[green]{get_text('language_changed')}")  # Ключ "language_changed"
-    elif lang_choice == "2":
+    logger.info("Пользователь перешел на страницу смену языка")
+    page.views.clear()
+    lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
+    page.controls.append(lv)
+    lv.controls.append(ft.Text("Настройки программы\n\n"))
+    page.update()
+
+    async def _change_language_ru(_):
+        """Смена языка на русский"""
         set_language("ru")
         save_language("ru")
         print(f"[green]{get_text('language_changed')}")
-    else:
-        print(f"[red]{get_text('invalid_language_choice')}")
+
+    async def _change_language_en(_):
+        """Смена языка на английский"""
+        set_language("en")
+        save_language("en")
+        print(f"[green]{get_text('language_changed')}")
+
+
+    await view_with_elements(page=page, title=await program_title(title="⚙️ Настройки"),
+                             buttons=[
+                                 await create_buttons(text=f"Русский", on_click=_change_language_ru),
+                                 await create_buttons(text=f"English", on_click=_change_language_en),
+                                 await create_buttons(text="⬅️ Назад", on_click=lambda _: page.go("/"))
+                             ],
+                             route_page="change_name_description_photo",
+                             lv=lv)
+    page.update()  # Обновляем страницу
 
 
 async def handle_settings(page: ft.Page):
@@ -42,14 +57,7 @@ async def handle_settings(page: ft.Page):
     page.views.clear()
     lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
     page.controls.append(lv)
-    lv.controls.append(
-        ft.Text(
-            "🔗 Подключение прокси — настройка подключения через прокси (SOCKS5). Вам потребуется указать IP-адрес, порт, а также логин и пароль.\n\n"
-            "⏳ Запись времени — настройка задержек между отправкой сообщений и подпиской на каналы. Укажите время в секундах для безопасной работы.\n\n"
-            "🆔 Запись ID и Hash — ввод API ID и API Hash для авторизации в Telegram. Можно получить в https://my.telegram.org/apps.\n\n"
-            "✉️ Запись сообщения — настройка текста, который будет отправляться в комментариях. Можно задать любой текст для автоматической рассылки.\n\n"
-        )
-    )
+    lv.controls.append(ft.Text("Настройки программы\n\n"))
     page.update()
 
     async def select_ai_model(_):
@@ -70,9 +78,9 @@ async def handle_settings(page: ft.Page):
         api_hash = input(get_text("select_action_3")).strip()
         await update_config_value(section='telegram_settings', option='api_hash', value=api_hash)
 
-    async def change_language(_):
+    async def _change_language(_):
         """Смена языка"""
-        pass
+        await change_language(page)
 
     async def change_the_number_of_suggested_ai_groups(_):
         """Изменение количества предложенных групп AI"""
@@ -84,7 +92,7 @@ async def handle_settings(page: ft.Page):
                                  await create_buttons(text=f"{get_text('settings_1')}", on_click=select_ai_model),
                                  await create_buttons(text=f"{get_text('settings_2')}", on_click=enter_api_id),
                                  await create_buttons(text=f"{get_text('settings_3')}", on_click=enter_api_hash),
-                                 await create_buttons(text=f"{get_text('settings_4')}", on_click=change_language),
+                                 await create_buttons(text=f"{get_text('settings_4')}", on_click=_change_language),
                                  await create_buttons(text=f"{get_text('settings_5')}",
                                                       on_click=change_the_number_of_suggested_ai_groups),
                                  await create_buttons(text="⬅️ Назад", on_click=lambda _: page.go("/"))
@@ -92,35 +100,6 @@ async def handle_settings(page: ft.Page):
                              route_page="change_name_description_photo",
                              lv=lv)
     page.update()  # Обновляем страницу
-
-
-async def main():
-    """
-    Основная функция, выполняющая поиск по ключевым словам и сохранение найденных групп/каналов в базу данных.
-    """
-    try:
-        # Загружаем сохранённый язык или запрашиваем при первом запуске
-        if not os.path.exists("user_data/lang_settings.json"):
-            print("[yellow]First launch detected / Обнаружен первый запуск")
-            print(f"[yellow]{get_text('select_language')}:")
-            print("[green]1 - English\n[green]2 - Русский")
-            lang_choice = input("Enter choice (1 or 2): ").strip()
-            if lang_choice == "1":
-                set_language("en")
-                save_language("en")
-            elif lang_choice == "2":
-                set_language("ru")
-                save_language("ru")
-            else:
-                set_language("ru")  # По умолчанию русский
-                save_language("ru")
-                print(f"[red]{get_text('invalid_language_choice')}")
-        else:
-            current_language = load_language()
-            set_language(current_language)
-
-    except Exception as e:
-        logger.exception(e)
 
 
 class Application:
