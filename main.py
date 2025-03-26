@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
-import asyncio
 import os
 import webbrowser
 
+import flet as ft
 from loguru import logger
 from rich import print
 
-from core.config import program_version, date_of_program_change
+from core.config import program_version, date_of_program_change, program_name
 from core.file_utils import save_language, load_language
 from core.getting_data import getting_data_from_database
 from core.localization import set_language, get_text
 from core.logging_in import loging
 from core.settings import select_and_save_model, update_config_value
 from core.telegram import search_and_save_telegram_groups
+from core.views import TITLE_FONT_WEIGHT, PRIMARY_COLOR
 
 logger.add('user_data/log/log.log')
 
@@ -25,7 +26,7 @@ async def change_language():
     if lang_choice == "1":
         set_language("en")
         save_language("en")
-        print(f"[green]{get_text('language_changed')}")  # Добавьте ключ "language_changed"
+        print(f"[green]{get_text('language_changed')}")  # Ключ "language_changed"
     elif lang_choice == "2":
         set_language("ru")
         save_language("ru")
@@ -37,7 +38,7 @@ async def change_language():
 async def menu_settings():
     """Меню настроек"""
     await loging()
-    print(f"[red] {get_text('settings_title')}\n\n"
+    print(f"\n\n[red] {get_text('settings_title')}\n\n"
           f"[green] {get_text('settings_1')}\n"
           f"[green] {get_text('settings_2')}\n"
           f"[green] {get_text('settings_3')}\n"
@@ -88,32 +89,151 @@ async def main():
             current_language = load_language()
             set_language(current_language)
 
-        # Основное меню
-        while True:  # Добавляем цикл для возврата в меню
-            print(f"[red] {get_text('title')}\n"
-                  f"[red] {program_version}\n"
-                  f"[red] {date_of_program_change}\n\n"
-
-                  f"[green] {get_text('menu_1')}\n"
-                  f"[green] {get_text('menu_2')}\n"
-                  f"[green] {get_text('menu_3')}\n"
-                  f"[green] {get_text('menu_4')}\n")
-            user_input = input(get_text("select_action"))
-            if user_input == "1":  # Добавляем пункт меню для поиска по ключевым словам
-                messages_for_ai = input(get_text("ai_model_select_4"))
-                await search_and_save_telegram_groups(user_input=messages_for_ai)
-            elif user_input == "2":  # Добавляем пункт меню для настроек
-                await menu_settings()
-            elif user_input == "3":  # Добавляем пункт меню для открытия документации
-                print(f"[red] {get_text('docs_open')}\n")
-                webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki', new=2)
-            elif user_input == "4":  # Получение спарсенных данных
-                await getting_data_from_database()
-            else:
-                print(f"[red] {get_text('invalid_input')}")
     except Exception as e:
         logger.exception(e)
 
 
+class Application:
+    """Класс для управления приложением."""
+
+    def __init__(self):
+        self.page = None
+        self.info_list = None
+        self.WINDOW_WIDTH = 900
+        self.WINDOW_HEIGHT = 600
+        self.SPACING = 5
+        self.RADIUS = 5
+        self.LINE_COLOR = ft.colors.GREY
+        self.BUTTON_HEIGHT = 40
+        self.LINE_WIDTH = 1
+        self.PADDING = 10
+        self.BUTTON_WIDTH = 300
+        self.PROGRAM_MENU_WIDTH = self.BUTTON_WIDTH + self.PADDING
+
+    async def actions_with_the_program_window(self, page: ft.Page):
+        """Изменение на изменение главного окна программы."""
+        page.title = f"Версия {program_version}. Дата изменения {date_of_program_change}"
+        page.window.width = self.WINDOW_WIDTH
+        page.window.height = self.WINDOW_HEIGHT
+        page.window.resizable = False
+        page.window.min_width = self.WINDOW_WIDTH
+        page.window.max_width = self.WINDOW_WIDTH
+        page.window.min_height = self.WINDOW_HEIGHT
+        page.window.max_height = self.WINDOW_HEIGHT
+
+    def create_title(self, text: str, font_size) -> ft.Text:
+        """Создает заголовок с градиентом."""
+        return ft.Text(
+            spans=[
+                ft.TextSpan(
+                    text,
+                    ft.TextStyle(
+                        size=font_size,
+                        weight=TITLE_FONT_WEIGHT,
+                        foreground=ft.Paint(
+                            gradient=ft.PaintLinearGradient(
+                                (0, 20), (150, 20), [PRIMARY_COLOR, PRIMARY_COLOR]
+                            )), ), ), ], )
+
+    def create_button(self, text: str, route: str) -> ft.OutlinedButton:
+        """Создает кнопку меню."""
+        return ft.OutlinedButton(
+            text=text,
+            on_click=lambda _: self.page.go(route),
+            width=self.BUTTON_WIDTH,
+            height=self.BUTTON_HEIGHT,
+            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=self.RADIUS)),
+        )
+
+    def build_menu(self) -> ft.Column:
+        """Создает колонку с заголовками и кнопками."""
+        title = self.create_title(text=program_name, font_size=19)
+        version = self.create_title(text=f"Версия программы: {program_version}", font_size=13)
+        date_program_change = self.create_title(text=f"Дата изменения: {date_of_program_change}", font_size=13)
+        buttons = [
+            self.create_button(f"{get_text('menu_1')}", "/data_processing"),
+            self.create_button(f"{get_text('menu_2')}", "/settings"),
+            self.create_button(f"{get_text('menu_3')}", "/documentation"),
+            self.create_button(f"{get_text('menu_4')}", "/get_parsed_data"),
+        ]
+        return ft.Column(
+            [title, version, date_program_change, *buttons],
+            alignment=ft.MainAxisAlignment.START,
+            spacing=self.SPACING,
+        )
+
+    async def setup(self):
+        """Настраивает страницу."""
+        self.page.theme_mode = ft.ThemeMode.LIGHT
+        self.page.on_route_change = self.route_change
+        await self.actions_with_the_program_window(self.page)
+        self._add_startup_message()
+        await self.route_change(None)
+
+    def _add_startup_message(self):
+        """Добавляет стартовое сообщение в ListView."""
+        self.info_list.controls.append(
+            ft.Text(
+                f"{program_name} 🚀\n\n{program_name} - программа для поиска групп/каналов по ключевым словам 💬\n\n"
+                "📂 Проект доступен на GitHub: https://github.com/pyadrus/TelegramMaster-Search-GPT \n"
+                "📲 Контакт с разработчиком в Telegram: https://t.me/PyAdminRU\n"
+                f"📡 Информация на канале: https://t.me/master_tg_d"
+            )
+        )
+
+    async def route_change(self, route):
+        """Обработчик изменения маршрута."""
+        self.page.views.clear()
+        layout = ft.Row(
+            [
+                ft.Container(self.build_menu(), width=self.PROGRAM_MENU_WIDTH, padding=self.PADDING),
+                ft.Container(width=self.LINE_WIDTH, bgcolor=self.LINE_COLOR),
+                ft.Container(self.info_list, expand=True, padding=self.PADDING),
+            ],
+            alignment=ft.MainAxisAlignment.START,
+            spacing=0,
+            expand=True,
+        )
+        self.page.views.append(ft.View("/", [layout]))
+        route_handlers = {
+            "/data_processing": self._handle_data_processing,
+            "/documentation": self._handle_documentation,
+            "/settings": self._handle_settings,
+            "/get_parsed_data": self._get_parsed_data,
+        }
+        handler = route_handlers.get(self.page.route)
+        if handler:
+            await handler()
+        self.page.update()
+
+    async def _handle_data_processing(self):
+        """Перебор данных"""
+        messages_for_ai = input(get_text("ai_model_select_4"))
+        await search_and_save_telegram_groups(user_input=messages_for_ai)
+
+    async def _handle_settings(self):
+        """Страница ⚙️ Настройки программы"""
+        await menu_settings()
+
+    async def _handle_documentation(self):
+        """Страница 📖 Документация"""
+        print(f"[red] {get_text('docs_open')}\n")
+        webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki', new=2)
+
+    async def _get_parsed_data(self):
+        """Страница Получение спарсенных данных"""
+        await getting_data_from_database()
+
+    async def main(self, page: ft.Page):
+        """Точка входа в приложение."""
+        self.page = page
+        self.info_list = ft.ListView(expand=True, spacing=10, padding=self.PADDING, auto_scroll=True)
+
+        await self.setup()
+        await loging()
+
+
 if __name__ == '__main__':
-    asyncio.run(main())
+    # asyncio.run(main())
+
+    ft.app(target=Application().main)
