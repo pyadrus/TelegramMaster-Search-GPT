@@ -6,6 +6,7 @@ import flet as ft
 from loguru import logger
 from rich import print
 
+from core.buttons import create_buttons
 from core.config import program_version, date_of_program_change, program_name
 from core.file_utils import save_language, load_language
 from core.getting_data import getting_data_from_database
@@ -13,7 +14,7 @@ from core.localization import set_language, get_text
 from core.logging_in import loging
 from core.settings import select_and_save_model, update_config_value
 from core.telegram import search_and_save_telegram_groups
-from core.views import TITLE_FONT_WEIGHT, PRIMARY_COLOR
+from core.views import TITLE_FONT_WEIGHT, PRIMARY_COLOR, view_with_elements, program_title
 
 logger.add('user_data/log/log.log')
 
@@ -35,33 +36,62 @@ async def change_language():
         print(f"[red]{get_text('invalid_language_choice')}")
 
 
-async def menu_settings():
+async def handle_settings(page: ft.Page):
     """Меню настроек"""
-    await loging()
-    print(f"\n\n[red] {get_text('settings_title')}\n\n"
-          f"[green] {get_text('settings_1')}\n"
-          f"[green] {get_text('settings_2')}\n"
-          f"[green] {get_text('settings_3')}\n"
-          f"[green] {get_text('settings_4')}\n"
-          f"[green] {get_text('settings_5')}\n")  # Новый пункт меню
-    user_input = input(get_text("select_action"))
-    if user_input == "1":  # Добавляем пункт меню для выбора модели
+    logger.info("Пользователь перешел на страницу Настройки")
+    page.views.clear()
+    lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
+    page.controls.append(lv)
+    lv.controls.append(
+        ft.Text(
+            "🔗 Подключение прокси — настройка подключения через прокси (SOCKS5). Вам потребуется указать IP-адрес, порт, а также логин и пароль.\n\n"
+            "⏳ Запись времени — настройка задержек между отправкой сообщений и подпиской на каналы. Укажите время в секундах для безопасной работы.\n\n"
+            "🆔 Запись ID и Hash — ввод API ID и API Hash для авторизации в Telegram. Можно получить в https://my.telegram.org/apps.\n\n"
+            "✉️ Запись сообщения — настройка текста, который будет отправляться в комментариях. Можно задать любой текст для автоматической рассылки.\n\n"
+        )
+    )
+    page.update()
+
+    async def select_ai_model(_):
+        """Выбор модели AI"""
         print(f"[red] {get_text('ai_model_select')}")
         choice = input(get_text("select_action_1")).strip()
         await select_and_save_model(section='Settings', option='selectedmodel', choice=choice)
-    elif user_input == "2":  # Добавляем пункт меню для ввода API_ID
+
+    async def enter_api_id(_):
+        """API_ID"""
         print(f"[red] {get_text('api_id_entry')}")
         api_id = input(get_text("select_action_2")).strip()
         await update_config_value(section='telegram_settings', option='api_id', value=api_id)
-    elif user_input == "3":  # Добавляем пункт меню для ввода API_HASH
+
+    async def enter_api_hash(_):
+        """api_hash"""
         print(f"[red] {get_text('api_hash_entry')}")
         api_hash = input(get_text("select_action_3")).strip()
         await update_config_value(section='telegram_settings', option='api_hash', value=api_hash)
-    elif user_input == "4":  # Добавляем пункт меню для смены языка
-        await change_language()
-    elif user_input == "5":  # Добавляем пункт ввода количества наименований групп, предложенных ИИ
+
+    async def change_language(_):
+        """Смена языка"""
+        pass
+
+    async def change_the_number_of_suggested_ai_groups(_):
+        """Изменение количества предложенных групп AI"""
         number_of_groups = input(get_text("select_action_4")).strip()
         await update_config_value(section='ai', option='number_of_groups', value=number_of_groups)
+
+    await view_with_elements(page=page, title=await program_title(title="⚙️ Настройки"),
+                             buttons=[
+                                 await create_buttons(text=f"{get_text('settings_1')}", on_click=select_ai_model),
+                                 await create_buttons(text=f"{get_text('settings_2')}", on_click=enter_api_id),
+                                 await create_buttons(text=f"{get_text('settings_3')}", on_click=enter_api_hash),
+                                 await create_buttons(text=f"{get_text('settings_4')}", on_click=change_language),
+                                 await create_buttons(text=f"{get_text('settings_5')}",
+                                                      on_click=change_the_number_of_suggested_ai_groups),
+                                 await create_buttons(text="⬅️ Назад", on_click=lambda _: page.go("/"))
+                             ],
+                             route_page="change_name_description_photo",
+                             lv=lv)
+    page.update()  # Обновляем страницу
 
 
 async def main():
@@ -213,7 +243,7 @@ class Application:
 
     async def _handle_settings(self):
         """Страница ⚙️ Настройки программы"""
-        await menu_settings()
+        await handle_settings(self.page)
 
     async def _handle_documentation(self):
         """Страница 📖 Документация"""
