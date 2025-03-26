@@ -39,8 +39,7 @@ async def change_language(page: ft.Page):
         save_language("en")
         print(f"[green]{get_text('language_changed')}")
 
-
-    await view_with_elements(page=page, title=await program_title(title="⚙️ Настройки"),
+    await view_with_elements(page=page, title=await program_title(title="⚙️ Смена языка"),
                              buttons=[
                                  await create_buttons(text=f"Русский", on_click=_change_language_ru),
                                  await create_buttons(text=f"English", on_click=_change_language_en),
@@ -62,9 +61,7 @@ async def handle_settings(page: ft.Page):
 
     async def select_ai_model(_):
         """Выбор модели AI"""
-        print(f"[red] {get_text('ai_model_select')}")
-        choice = input(get_text("select_action_1")).strip()
-        await select_and_save_model(section='Settings', option='selectedmodel', choice=choice)
+        await select_and_save_model(page=page, section='Settings', option='selectedmodel')
 
     async def enter_api_id(_):
         """API_ID"""
