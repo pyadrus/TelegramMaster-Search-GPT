@@ -17,8 +17,7 @@ translations = {
         "settings_title": "Настройки",
 
         "settings_1": "1 - Выбор модели ИИ",
-        "settings_2": "2 - Запись api_id",
-        "settings_3": "3 - Запись api_hash",
+        "settings_2": "2 - Запись api_id и api_hash",
         "settings_4": "4 - Сменить язык",
         "settings_5": "5 - Сменить количество предложенных групп ИИ",
 
@@ -65,8 +64,7 @@ translations = {
         "settings_title": "Settings",
 
         "settings_1": "1 - Select AI model",
-        "settings_2": "2 - Enter api_id",
-        "settings_3": "3 - Enter api_hash",
+        "settings_2": "2 - Enter api_id and api_hash",
         "settings_4": "4 - Change language",
         "settings_5": "5 - Change the number of suggested AI groups",
 

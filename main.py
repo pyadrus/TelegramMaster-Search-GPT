@@ -7,47 +7,14 @@ from rich import print
 
 from core.buttons import create_buttons
 from core.config import program_version, date_of_program_change, program_name
-from core.file_utils import save_language
 from core.getting_data import getting_data_from_database
-from core.localization import set_language, get_text
+from core.localization import get_text
 from core.logging_in import loging
-from core.settings import select_and_save_model, update_config_value, writing_api_id_api_hash
+from core.settings import select_and_save_model, update_config_value, writing_api_id_api_hash, change_language
 from core.telegram import search_and_save_telegram_groups
 from core.views import TITLE_FONT_WEIGHT, PRIMARY_COLOR, view_with_elements, program_title
 
 logger.add('user_data/log/log.log')
-
-
-async def change_language(page: ft.Page):
-    """Функция для смены языка в настройках программы"""
-    logger.info("Пользователь перешел на страницу смену языка")
-    page.views.clear()
-    lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
-    page.controls.append(lv)
-    lv.controls.append(ft.Text("Настройки программы\n\n"))
-    page.update()
-
-    async def _change_language_ru(_):
-        """Смена языка на русский"""
-        set_language("ru")
-        save_language("ru")
-        print(f"[green]{get_text('language_changed')}")
-
-    async def _change_language_en(_):
-        """Смена языка на английский"""
-        set_language("en")
-        save_language("en")
-        print(f"[green]{get_text('language_changed')}")
-
-    await view_with_elements(page=page, title=await program_title(title="⚙️ Смена языка"),
-                             buttons=[
-                                 await create_buttons(text=f"Русский", on_click=_change_language_ru),
-                                 await create_buttons(text=f"English", on_click=_change_language_en),
-                                 await create_buttons(text="⬅️ Назад", on_click=lambda _: page.go("/"))
-                             ],
-                             route_page="change_name_description_photo",
-                             lv=lv)
-    page.update()  # Обновляем страницу
 
 
 async def handle_settings(page: ft.Page):
@@ -63,12 +30,8 @@ async def handle_settings(page: ft.Page):
         """Выбор модели AI"""
         await select_and_save_model(page=page, section='Settings', option='selectedmodel')
 
-    async def enter_api_id(_):
-        """API_ID"""
-        await writing_api_id_api_hash(page)
-
-    async def enter_api_hash(_):
-        """api_hash"""
+    async def enter_api_id_api_hash(_):
+        """API_ID, API_HASH"""
         await writing_api_id_api_hash(page)
 
     async def _change_language(_):
@@ -83,8 +46,7 @@ async def handle_settings(page: ft.Page):
     await view_with_elements(page=page, title=await program_title(title="⚙️ Настройки"),
                              buttons=[
                                  await create_buttons(text=f"{get_text('settings_1')}", on_click=select_ai_model),
-                                 await create_buttons(text=f"{get_text('settings_2')}", on_click=enter_api_id),
-                                 await create_buttons(text=f"{get_text('settings_3')}", on_click=enter_api_hash),
+                                 await create_buttons(text=f"{get_text('settings_2')}", on_click=enter_api_id_api_hash),
                                  await create_buttons(text=f"{get_text('settings_4')}", on_click=_change_language),
                                  await create_buttons(text=f"{get_text('settings_5')}",
                                                       on_click=change_the_number_of_suggested_ai_groups),

@@ -1,10 +1,44 @@
 # -*- coding: utf-8 -*-
 import flet as ft
+from loguru import logger
 
 from core.buttons import create_buttons
 from core.config import read_config_file
-from core.file_utils import saving_changes_in_config_ini
-from core.localization import get_text
+from core.file_utils import saving_changes_in_config_ini, save_language
+from core.localization import get_text, set_language
+from core.views import view_with_elements, program_title
+
+
+async def change_language(page: ft.Page):
+    """Функция для смены языка в настройках программы"""
+    logger.info("Пользователь перешел на страницу смену языка")
+    page.views.clear()
+    lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
+    page.controls.append(lv)
+    lv.controls.append(ft.Text("Настройки программы\n\n"))
+    page.update()
+
+    async def _change_language_ru(_):
+        """Смена языка на русский"""
+        set_language("ru")
+        save_language("ru")
+        print(f"[green]{get_text('language_changed')}")
+
+    async def _change_language_en(_):
+        """Смена языка на английский"""
+        set_language("en")
+        save_language("en")
+        print(f"[green]{get_text('language_changed')}")
+
+    await view_with_elements(page=page, title=await program_title(title="⚙️ Смена языка"),
+                             buttons=[
+                                 await create_buttons(text=f"Русский", on_click=_change_language_ru),
+                                 await create_buttons(text=f"English", on_click=_change_language_en),
+                                 await create_buttons(text="⬅️ Назад", on_click=lambda _: page.go("/"))
+                             ],
+                             route_page="/",
+                             lv=lv)
+    page.update()  # Обновляем страницу
 
 
 async def writing_api_id_api_hash(page: ft.Page):
