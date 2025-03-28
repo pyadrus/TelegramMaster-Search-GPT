@@ -58,8 +58,7 @@ async def program_title(title):
 
 
 async def view_with_elements(page: ft.Page, title: ft.Text, buttons: list[ft.ElevatedButton], route_page,
-                             lv: ft.ListView,
-                             content: list[ft.Control] = None):
+                             lv: ft.ListView, content: list[ft.Control] = None):
     # Создаем View с элементами
 
     if content:

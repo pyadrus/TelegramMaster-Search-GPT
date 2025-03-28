@@ -11,7 +11,7 @@ from core.file_utils import save_language
 from core.getting_data import getting_data_from_database
 from core.localization import set_language, get_text
 from core.logging_in import loging
-from core.settings import select_and_save_model, update_config_value
+from core.settings import select_and_save_model, update_config_value, writing_api_id_api_hash
 from core.telegram import search_and_save_telegram_groups
 from core.views import TITLE_FONT_WEIGHT, PRIMARY_COLOR, view_with_elements, program_title
 
@@ -65,15 +65,11 @@ async def handle_settings(page: ft.Page):
 
     async def enter_api_id(_):
         """API_ID"""
-        print(f"[red] {get_text('api_id_entry')}")
-        api_id = input(get_text("select_action_2")).strip()
-        await update_config_value(section='telegram_settings', option='api_id', value=api_id)
+        await writing_api_id_api_hash(page)
 
     async def enter_api_hash(_):
         """api_hash"""
-        print(f"[red] {get_text('api_hash_entry')}")
-        api_hash = input(get_text("select_action_3")).strip()
-        await update_config_value(section='telegram_settings', option='api_hash', value=api_hash)
+        await writing_api_id_api_hash(page)
 
     async def _change_language(_):
         """Смена языка"""
