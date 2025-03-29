@@ -9,6 +9,25 @@ from core.localization import get_text, set_language
 from core.views import view_with_elements, program_title
 
 
+async def record_setting(page: ft.Page):
+    """
+    Запись лимитов на аккаунт или сообщение
+
+    :param page: Страница интерфейса Flet для отображения элементов управления.
+    """
+    lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
+    page.controls.append(lv)  # добавляем ListView на страницу для отображения логов 📝
+    lv.controls.append(ft.Text(f"Введите данные для записи"))  # отображаем сообщение в ListView
+    number_of_groups = ft.TextField(label=get_text("select_action_4"), multiline=True, max_lines=19)
+
+    async def btn_click(e) -> None:
+        await update_config_value(section='ai', option='number_of_groups', value=number_of_groups.value)
+        page.go("/")  # Изменение маршрута в представлении существующих настроек
+        page.update()
+
+    await add_view_with_fields_and_button(page, [number_of_groups], btn_click, lv)
+
+
 async def change_language(page: ft.Page):
     """Функция для смены языка в настройках программы"""
     logger.info("Пользователь перешел на страницу смену языка")

@@ -10,7 +10,7 @@ from core.config import program_version, date_of_program_change, program_name
 from core.getting_data import getting_data_from_database
 from core.localization import get_text
 from core.logging_in import loging
-from core.settings import select_and_save_model, update_config_value, writing_api_id_api_hash, change_language
+from core.settings import select_and_save_model, writing_api_id_api_hash, change_language, record_setting
 from core.telegram import search_and_save_telegram_groups
 from core.views import TITLE_FONT_WEIGHT, PRIMARY_COLOR, view_with_elements, program_title
 
@@ -40,16 +40,14 @@ async def handle_settings(page: ft.Page):
 
     async def change_the_number_of_suggested_ai_groups(_):
         """Изменение количества предложенных групп AI"""
-        number_of_groups = input(get_text("select_action_4")).strip()
-        await update_config_value(section='ai', option='number_of_groups', value=number_of_groups)
+        await record_setting(page)
 
     await view_with_elements(page=page, title=await program_title(title="⚙️ Настройки"),
                              buttons=[
                                  await create_buttons(text=f"{get_text('settings_1')}", on_click=select_ai_model),
                                  await create_buttons(text=f"{get_text('settings_2')}", on_click=enter_api_id_api_hash),
                                  await create_buttons(text=f"{get_text('settings_4')}", on_click=_change_language),
-                                 await create_buttons(text=f"{get_text('settings_5')}",
-                                                      on_click=change_the_number_of_suggested_ai_groups),
+                                 await create_buttons(text=f"{get_text('settings_5')}", on_click=change_the_number_of_suggested_ai_groups),
                                  await create_buttons(text="⬅️ Назад", on_click=lambda _: page.go("/"))
                              ],
                              route_page="change_name_description_photo",
