@@ -170,8 +170,7 @@ class Application:
 
     async def _handle_data_processing(self):
         """Перебор данных"""
-        messages_for_ai = input(get_text("ai_model_select_4"))
-        await search_and_save_telegram_groups(user_input=messages_for_ai)
+        await search_and_save_telegram_groups(self.page)
 
     async def _handle_settings(self):
         """Страница ⚙️ Настройки программы"""

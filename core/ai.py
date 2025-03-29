@@ -3,7 +3,6 @@ import os
 
 from groq import AsyncGroq
 from loguru import logger
-from rich import print
 
 from core.config import selectedmodel, number_of_groups, GROQ_API_KEY
 from core.file_utils import load_language
@@ -47,7 +46,6 @@ async def get_groq_response(user_input):
         )
         # Получаем ответ от ИИ
         ai_response = chat_completion.choices[0].message.content
-        print(f"{get_text('ai_model_select_1')}", ai_response)
         return ai_response
     except Exception as e:
         logger.exception(e)
