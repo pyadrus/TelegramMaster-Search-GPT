@@ -3,10 +3,10 @@ translations = {
     "ru": {
         "title": "TelegramMaster-Search-GPT",
 
-        "menu_1": "1 - Перебор данных",
-        "menu_2": "2 - Настройки",
-        "menu_3": "3 - Документация",
-        "menu_4": "4 - Получение спарсеных данных",
+        "menu_1": "Перебор данных",
+        "menu_2": "Настройки",
+        "menu_3": "Документация",
+        "menu_4": "Получение спарсеных данных",
 
         "select_action": "Выберите действие: ",
         "select_action_1": "Введите номер модели: ",
@@ -16,10 +16,10 @@ translations = {
 
         "settings_title": "Настройки",
 
-        "settings_1": "1 - Выбор модели ИИ",
-        "settings_2": "2 - Запись api_id и api_hash",
-        "settings_4": "4 - Сменить язык",
-        "settings_5": "5 - Сменить количество предложенных групп ИИ",
+        "settings_1": "Выбор модели ИИ",
+        "settings_2": "Запись api_id и api_hash",
+        "settings_4": "Сменить язык",
+        "settings_5": "Сменить количество предложенных групп ИИ",
 
         "ai_model_select": "Выбор модели ИИ",
         "ai_model_select_1": "Ответ от ИИ:",
@@ -50,10 +50,10 @@ translations = {
     "en": {
         "title": "TelegramMaster-Search-GPT",
 
-        "menu_1": "1 - Data Processing",
-        "menu_2": "2 - Settings",
-        "menu_3": "3 - Documentation",
-        "menu_4": "4 - Get parsed data",
+        "menu_1": "Data Processing",
+        "menu_2": "Settings",
+        "menu_3": "Documentation",
+        "menu_4": "Get parsed data",
 
         "select_action": "Select an action: ",
         "select_action_1": "Enter the model number:",
@@ -63,10 +63,10 @@ translations = {
 
         "settings_title": "Settings",
 
-        "settings_1": "1 - Select AI model",
-        "settings_2": "2 - Enter api_id and api_hash",
-        "settings_4": "4 - Change language",
-        "settings_5": "5 - Change the number of suggested AI groups",
+        "settings_1": "Select AI model",
+        "settings_2": "Enter api_id and api_hash",
+        "settings_4": "Change language",
+        "settings_5": "Change the number of suggested AI groups",
 
         "ai_model_select": "Select AI Model",
         "ai_model_select_1": "Answer from AI:",
