@@ -33,3 +33,5 @@ proxy_user = config['proxy_data']['user']
 proxy_password = config['proxy_data']['password']
 proxy_port = config['proxy_data']['port']
 proxy_ip = config['proxy_data']['ip']
+
+language = config['localization']['language']

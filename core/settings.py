@@ -3,8 +3,8 @@ import flet as ft
 
 from core.buttons import create_buttons
 from core.config import read_config_file
-from core.file_utils import saving_changes_in_config_ini, save_language
-from core.localization import get_text, set_language
+from core.file_utils import saving_changes_in_config_ini
+from core.localization import get_text
 from core.views import view_with_elements, program_title
 
 
@@ -37,15 +37,19 @@ async def change_language(page: ft.Page):
 
     async def _change_language_ru(_):
         """Смена языка на русский"""
-        set_language("ru")
-        save_language("ru")
-        print(f"[green]{get_text('language_changed')}")
+        # set_language("ru")
+        # save_language("ru")
+        # print(f"[green]{get_text('language_changed')}")
+        language = "ru"
+        await update_config_value(section='localization', option='language', value=language)
 
     async def _change_language_en(_):
         """Смена языка на английский"""
-        set_language("en")
-        save_language("en")
-        print(f"[green]{get_text('language_changed')}")
+        # set_language("en")
+        # save_language("en")
+        # print(f"[green]{get_text('language_changed')}")
+        language = "en"
+        await update_config_value(section='localization', option='language', value=language)
 
     await view_with_elements(page=page, title=await program_title(title="⚙️ Смена языка"),
                              buttons=[
