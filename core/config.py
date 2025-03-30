@@ -2,7 +2,7 @@
 import configparser
 
 
-async def read_config_file():
+def read_config_file():
     """
     Чтение данных из config.ini
 
@@ -16,9 +16,7 @@ async def read_config_file():
     return config
 
 
-# Чтение конфигурации из config.ini
-config = configparser.ConfigParser()
-config.read('user_data/config.ini')
+config = read_config_file()  # Чтение конфигурации из config.ini
 api_id = config['telegram_settings']['api_id']
 api_hash = config['telegram_settings']['api_hash']
 username = config['telegram_settings']['username']

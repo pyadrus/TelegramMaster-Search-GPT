@@ -185,7 +185,7 @@ async def select_and_save_model(page: ft.Page, section, option):
 
 async def update_config_value(section, option, value):
     """Обновление значения в конфигурационном файле"""
-    config = await read_config_file()
+    config = read_config_file()
     if not config.has_section(section):
         config.add_section(section)
     config.set(section, option, value)
