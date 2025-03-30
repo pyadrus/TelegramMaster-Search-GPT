@@ -19,7 +19,6 @@ logger.add('user_data/log/log.log')
 
 async def handle_settings(page: ft.Page):
     """Меню настроек"""
-    logger.info("Пользователь перешел на страницу Настройки")
     page.views.clear()
     lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
     page.controls.append(lv)

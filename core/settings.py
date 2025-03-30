@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import flet as ft
-from loguru import logger
 
 from core.buttons import create_buttons
 from core.config import read_config_file
@@ -30,7 +29,6 @@ async def record_setting(page: ft.Page):
 
 async def change_language(page: ft.Page):
     """Функция для смены языка в настройках программы"""
-    logger.info("Пользователь перешел на страницу смену языка")
     page.views.clear()
     lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
     page.controls.append(lv)

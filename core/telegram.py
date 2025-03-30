@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+import flet as ft
 from loguru import logger
 from rich import print
 from telethon.errors import AuthKeyUnregisteredError, FloodWaitError
 from telethon.sync import TelegramClient, functions
-import flet as ft
+
 from core.ai import get_groq_response
 from core.config import username, api_id, api_hash
 from core.database import save_to_database, remove_duplicates
@@ -47,6 +48,7 @@ async def search_and_processing_found_groups(client, term, groups_set) -> None:
     except FloodWaitError as e:
         print(f"{get_text('error_1')} {e}")
         return
+
 
 async def message_output_program_window(lv: ft.ListView, page: ft.Page, message_program):
     """

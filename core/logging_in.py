@@ -2,30 +2,12 @@ import datetime
 import json
 from urllib.request import urlopen  # Изменено с urllib2 на urllib.request
 
-import phonenumbers
 import requests
 from loguru import logger
-from phonenumbers import carrier, geocoder
 from telethon import TelegramClient
 from telethon.errors import FilePartsInvalidError
 
 from core.config import program_version, date_of_program_change, program_name
-
-
-def getting_phone_number_data_by_phone_number(phone_numbers):
-    """
-    Определение страны и оператора по номеру телефона
-
-    :param phone_numbers: Номер телефона
-    :return: None
-    """
-    # Пример номера телефона для анализа
-    number = phonenumbers.parse(f"+{phone_numbers}", None)
-    # Получение информации о стране и операторе на русском языке
-    country_name = geocoder.description_for_number(number, "ru")
-    operator_name = carrier.name_for_number(number, "ru")
-    # Вывод информации
-    logger.info(f"Номер: {phone_numbers}, Оператор: {operator_name}, Страна: {country_name}")
 
 
 def get_country_flag(ip_address):
