@@ -37,20 +37,12 @@ def save_to_database(data_tuple):
 
 
 def remove_duplicates():
+    """Удаление дубликатов в таблице groups по колонке id"""
     try:
         with sqlite3.connect(path_database) as conn:
             cursor = conn.cursor()
-            # Создание временной таблицы с уникальными записями
-            cursor.execute('''CREATE TEMPORARY TABLE temp_groups AS SELECT DISTINCT id, title, participants_count, 
-                              username, access_hash, date FROM groups''')
-            # Очистка основной таблицы
-            cursor.execute('DELETE FROM groups')
-            # Копирование уникальных записей обратно в основную таблицу
-            cursor.execute('''INSERT INTO groups (id, title, participants_count, username, access_hash, date) SELECT 
-                              id, title, participants_count, username, access_hash, date FROM temp_groups''')
-            # Удаление временной таблицы
-            cursor.execute('DROP TABLE temp_groups')
-            # Сохранение изменений и закрытие соединения
+            # Удаляем дубликаты, оставляя запись с наименьшим rowid
+            cursor.execute('''DELETE FROM groups WHERE rowid NOT IN (SELECT MIN(rowid) FROM groups GROUP BY id)''')
             conn.commit()
     except Exception as e:
         logger.exception(e)

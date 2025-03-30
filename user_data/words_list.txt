@@ -1,28 +1,60 @@
-доги
-
-Dogecoin
-
-cryptocurrency Doge
-
-Doge meme coin
-
-Doge price
-
-Doge news
-
-Doge trading
-
-Doge chart
-
-DOGE community
-
-Doge to buy
-
-Investing in Dogecoin
-
- Doge wallet
-
-future of Dogecoin
+java разработка
+java программирование
+java курсы
+java онлайн
+java обучение
+java для начинающих
+java фреймворки
+java библиотеки
+java spring
+java hibernate
+java maven
+java gradle
+java андроид
+java веб приложение
+java алгоритмы
+java структуры данных
+java тестирование
+java деплой
+java docker
+java api
+java потоки
+java многопоточность
+java базы данных
+javajdbc
+java mysql
+java postgresql
+java sql
+java websockets
+java безопасность
+java галактика
+java eclipse
+java intellij
+java idea
+java нити
+java хендлинг ошибок
+java шаблоны
+java design patterns
+java синтаксис
+java типы данных
+java операторы
+java объекты
+java классы
+java интерфейсы
+java наследование
+java полиморфизм
+java перегрузка
+java итераторы
+java коллекции
+java stream api
+java concurrency
+java networking
+java mobile development
+java spring boot
+java microservices
+java kotlin
+java javascript
+java react
 
 
 

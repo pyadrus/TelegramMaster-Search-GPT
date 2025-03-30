@@ -81,7 +81,6 @@ async def search_and_save_telegram_groups(page: ft.Page) -> None:
 
             # Очистка списка от пустых строк и пробелов
             search_terms = [term.strip() for term in search_terms if term.strip()]
-            # logger.info(f"{get_text('messages')}", search_terms)
 
             # Поиск групп по каждому термину
             for term in search_terms:
