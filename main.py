@@ -133,14 +133,7 @@ class Application:
 
     def _add_startup_message(self):
         """Добавляет стартовое сообщение в ListView."""
-        self.info_list.controls.append(
-            ft.Text(
-                f"{program_name} 🚀\n\n{program_name} - программа для поиска групп/каналов по ключевым словам 💬\n\n"
-                "📂 Проект доступен на GitHub: https://github.com/pyadrus/TelegramMaster-Search-GPT \n"
-                "📲 Контакт с разработчиком в Telegram: https://t.me/PyAdminRU\n"
-                f"📡 Информация на канале: https://t.me/master_tg_d"
-            )
-        )
+        self.info_list.controls.append(ft.Text(f"{get_text('text_main_page')}"))
 
     async def route_change(self, route):
         """Обработчик изменения маршрута."""

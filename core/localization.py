@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from core.config import language, program_name
+
 translations = {
     "ru": {
         "title": "TelegramMaster-Search-GPT",
@@ -46,6 +48,10 @@ translations = {
         "ai_prompt_based_on": "на основе текста пользователя:",
         "ai_prompt_return_format": "Верни результат в формате простого списка, каждое слово на новой строке, без нумерации и дополнительных символов.",
 
+        "text_main_page": f"{program_name} 🚀\n\n{program_name} - программа для поиска групп/каналов по ключевым словам 💬\n\n"
+                          f"📂 Проект доступен на GitHub: https://github.com/pyadrus/TelegramMaster-Search-GPT \n"
+                          f"📲 Контакт с разработчиком в Telegram: https://t.me/PyAdminRU\n"
+                          f"📡 Информация на канале: https://t.me/master_tg_d"
     },
     "en": {
         "title": "TelegramMaster-Search-GPT",
@@ -93,12 +99,13 @@ translations = {
         "ai_prompt_based_on": "based on the user's text:",
         "ai_prompt_return_format": "Return the result as a simple list, each word on a new line, without numbering or extra symbols.",
 
+        "text_main_page": f"{program_name} 🚀\n\n{program_name} is a program for searching groups/channels by keywords 💬\n\n"
+                          f"📂 The project is available on GitHub: https://github.com/pyadrus/TelegramMaster-Search-GPT\n"
+                          f"📲 Contact with the developer in Telegram: https://t.me/PyAdminRU\n,"
+                          f"📡 Information on the channel: https://t.me/master_tg_d"
     }
 }
 
-# Глобальная переменная для текущего языка
-current_language = "ru"  # По умолчанию русский
-
 
 def get_text(key):
-    return translations[current_language].get(key, key)  # Если ключ не найден, возвращаем сам ключ
+    return translations[language].get(key, key)  # Если ключ не найден, возвращаем сам ключ
