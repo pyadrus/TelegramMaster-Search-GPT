@@ -47,7 +47,7 @@ async def handle_settings(page: ft.Page):
                                  await create_buttons(text=f"{get_text('settings_4')}", on_click=_change_language),
                                  await create_buttons(text=f"{get_text('settings_5')}",
                                                       on_click=change_the_number_of_suggested_ai_groups),
-                                 await create_buttons(text="⬅️ Назад", on_click=lambda _: page.go("/"))
+                                 await create_buttons(text=get_text("button_back"), on_click=lambda _: page.go("/"))
                              ],
                              route_page="change_name_description_photo",
                              lv=lv)

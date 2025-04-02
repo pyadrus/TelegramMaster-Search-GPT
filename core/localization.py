@@ -55,6 +55,9 @@ translations = {
         "text_title": f"Версия {program_version}. Дата изменения {date_of_program_change}",
         "text_title_version": f"Версия программы: {program_version}",
         "text_title_date": f"Дата изменения: {date_of_program_change}",
+        "text_data_processing": "Введите данные для записи",
+        "button_done": "✅ Готово",
+        "button_back": "⬅️ Назад",
     },
     "en": {
         "title": "TelegramMaster-Search-GPT",
@@ -109,6 +112,9 @@ translations = {
         "text_title": f"Version {program_version}. Date of change {date_of_program_change}",
         "text_title_version": f"Program version: {program_version}",
         "text_title_date": f"Date of change: {date_of_program_change}",
+        "text_data_processing": "Enter the data for recording",
+        "button_done": "✅ Done",
+        "button_back": "⬅️ Back",
     }
 }
 

@@ -16,7 +16,7 @@ async def record_setting(page: ft.Page):
     """
     lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
     page.controls.append(lv)  # добавляем ListView на страницу для отображения логов 📝
-    lv.controls.append(ft.Text(f"Введите данные для записи"))  # отображаем сообщение в ListView
+    lv.controls.append(ft.Text(get_text("text_data_processing")))  # отображаем сообщение в ListView
     number_of_groups = ft.TextField(label=get_text("select_action_4"), multiline=True, max_lines=19)
 
     async def btn_click(e) -> None:
@@ -49,7 +49,7 @@ async def change_language(page: ft.Page):
                              buttons=[
                                  await create_buttons(text=f"Русский", on_click=_change_language_ru),
                                  await create_buttons(text=f"English", on_click=_change_language_en),
-                                 await create_buttons(text="⬅️ Назад", on_click=lambda _: page.go("/"))
+                                 await create_buttons(text=get_text("button_back"), on_click=lambda _: page.go("/"))
                              ],
                              route_page="/",
                              lv=lv)
@@ -101,8 +101,8 @@ async def add_view_with_fields_and_button(page: ft.Page, fields: list, buttons, 
             lv,
             ft.Column(
                 controls=fields + [
-                    await create_buttons(text="✅ Готово", on_click=buttons),
-                    await create_buttons(text="⬅️ Назад", on_click=back_button_clicked),
+                    await create_buttons(text=get_text("button_done"), on_click=buttons),
+                    await create_buttons(text=get_text("button_back"), on_click=back_button_clicked),
                 ]
             )
         ]
@@ -152,7 +152,7 @@ async def select_and_save_model(page: ft.Page, section, option):
         page.update()
 
     save_button = ft.ElevatedButton(text="Сохранить", on_click=on_save)
-    b_button = ft.ElevatedButton(text="⬅️ Назад", on_click=lambda _: page.go("/"))
+    b_button = ft.ElevatedButton(text=get_text("button_back"), on_click=lambda _: page.go("/"))
 
     page.views.clear()
     page.views.append(

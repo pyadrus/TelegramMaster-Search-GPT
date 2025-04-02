@@ -64,7 +64,7 @@ async def search_and_save_telegram_groups(page: ft.Page) -> None:
     """Основная функция для поиска и сохранения групп Telegram."""
     lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
     page.controls.append(lv)  # добавляем ListView на страницу для отображения логов 📝
-    lv.controls.append(ft.Text(f"Введите данные для записи"))  # отображаем сообщение в ListView
+    lv.controls.append(ft.Text(get_text("text_data_processing")))  # отображаем сообщение в ListView
     messages_for_ai = ft.TextField(label=get_text("select_action_4"), multiline=True, max_lines=19)
 
     async def btn_click(e) -> None:
