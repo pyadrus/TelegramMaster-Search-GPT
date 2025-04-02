@@ -10,9 +10,8 @@ from core.proxy_config import setup_proxy
 def promt_ai(number_of_groups, user_input) -> str:
     """Промт для AI"""
     # Используем get_text для получения переведённого текста промта
-    promt_ai = (f"{get_text('ai_prompt')} {number_of_groups} {get_text('ai_prompt_unique_keywords')} "
-                f"{get_text('ai_prompt_based_on')} {user_input}. {get_text('ai_prompt_return_format')}")
-    return promt_ai
+    return (f"{get_text('ai_prompt')} {number_of_groups} {get_text('ai_prompt_unique_keywords')} "
+            f"{get_text('ai_prompt_based_on')} {user_input}. {get_text('ai_prompt_return_format')}")
 
 
 async def get_groq_response(user_input):
@@ -31,8 +30,7 @@ async def get_groq_response(user_input):
             ],
             model=f"{selectedmodel}",
         )
-        # Получаем ответ от ИИ
-        ai_response = chat_completion.choices[0].message.content
-        return ai_response
+        # Возвращаем ответ от ИИ
+        return chat_completion.choices[0].message.content
     except Exception as e:
         logger.exception(e)
