@@ -5,7 +5,7 @@ import flet as ft
 from loguru import logger
 
 from core.buttons import create_buttons
-from core.config import program_version, date_of_program_change, program_name
+from core.config import program_name
 from core.getting_data import getting_data_from_database
 from core.localization import get_text
 from core.logging_in import loging
@@ -73,7 +73,7 @@ class Application:
 
     async def actions_with_the_program_window(self, page: ft.Page):
         """Изменение на изменение главного окна программы."""
-        page.title = f"Версия {program_version}. Дата изменения {date_of_program_change}"
+        page.title = f"{get_text('text_title')}"
         page.window.width = self.WINDOW_WIDTH
         page.window.height = self.WINDOW_HEIGHT
         page.window.resizable = False
@@ -109,8 +109,8 @@ class Application:
     def build_menu(self) -> ft.Column:
         """Создает колонку с заголовками и кнопками."""
         title = self.create_title(text=program_name, font_size=19)
-        version = self.create_title(text=f"Версия программы: {program_version}", font_size=13)
-        date_program_change = self.create_title(text=f"Дата изменения: {date_of_program_change}", font_size=13)
+        version = self.create_title(text=f"{get_text('text_title_version')}", font_size=13)
+        date_program_change = self.create_title(text=f"{get_text('text_title_date')}", font_size=13)
         buttons = [
             self.create_button(f"{get_text('menu_1')}", "/data_processing"),
             self.create_button(f"{get_text('menu_2')}", "/settings"),

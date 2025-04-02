@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from core.config import language, program_name
+from core.config import language, program_name, program_version, date_of_program_change
 
 translations = {
     "ru": {
@@ -51,7 +51,10 @@ translations = {
         "text_main_page": f"{program_name} 🚀\n\n{program_name} - программа для поиска групп/каналов по ключевым словам 💬\n\n"
                           f"📂 Проект доступен на GitHub: https://github.com/pyadrus/TelegramMaster-Search-GPT \n"
                           f"📲 Контакт с разработчиком в Telegram: https://t.me/PyAdminRU\n"
-                          f"📡 Информация на канале: https://t.me/master_tg_d"
+                          f"📡 Информация на канале: https://t.me/master_tg_d",
+        "text_title": f"Версия {program_version}. Дата изменения {date_of_program_change}",
+        "text_title_version": f"Версия программы: {program_version}",
+        "text_title_date": f"Дата изменения: {date_of_program_change}",
     },
     "en": {
         "title": "TelegramMaster-Search-GPT",
@@ -102,7 +105,10 @@ translations = {
         "text_main_page": f"{program_name} 🚀\n\n{program_name} is a program for searching groups/channels by keywords 💬\n\n"
                           f"📂 The project is available on GitHub: https://github.com/pyadrus/TelegramMaster-Search-GPT\n"
                           f"📲 Contact with the developer in Telegram: https://t.me/PyAdminRU\n,"
-                          f"📡 Information on the channel: https://t.me/master_tg_d"
+                          f"📡 Information on the channel: https://t.me/master_tg_d",
+        "text_title": f"Version {program_version}. Date of change {date_of_program_change}",
+        "text_title_version": f"Program version: {program_version}",
+        "text_title_date": f"Date of change: {date_of_program_change}",
     }
 }
 
