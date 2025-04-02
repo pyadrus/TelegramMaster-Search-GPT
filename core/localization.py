@@ -6,7 +6,7 @@ translations = {
         "title": "TelegramMaster-Search-GPT",
 
         "menu_1": "Перебор данных",
-        "menu_2": "Настройки",
+        "menu_2": "⚙️ Настройки",
         "menu_3": "Документация",
         "menu_4": "Получение спарсеных данных",
 
@@ -16,7 +16,7 @@ translations = {
         "select_action_3": "Введите api_hash: ",
         "select_action_4": "Введите количество вариаций названий групп, предложенных искусственным интеллектом: ",
 
-        "settings_title": "Настройки",
+        "settings_title": "⚙️ Настройки",
 
         "settings_1": "Выбор модели ИИ",
         "settings_2": "Запись api_id и api_hash",
@@ -63,7 +63,7 @@ translations = {
         "title": "TelegramMaster-Search-GPT",
 
         "menu_1": "Data Processing",
-        "menu_2": "Settings",
+        "menu_2": "⚙️ Settings",
         "menu_3": "Documentation",
         "menu_4": "Get parsed data",
 
@@ -73,7 +73,7 @@ translations = {
         "select_action_3": "Enter api_hash:",
         "select_action_4": "Enter the number of variations of the names of the groups suggested by the artificial intelligence:",
 
-        "settings_title": "Settings",
+        "settings_title": "⚙️ Settings",
 
         "settings_1": "Select AI model",
         "settings_2": "Enter api_id and api_hash",

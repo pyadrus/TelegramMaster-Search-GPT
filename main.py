@@ -40,7 +40,7 @@ async def handle_settings(page: ft.Page):
         """Изменение количества предложенных групп AI"""
         await record_setting(page)
 
-    await view_with_elements(page=page, title=await program_title(title="⚙️ Настройки"),
+    await view_with_elements(page=page, title=await program_title(title=f"{get_text('settings_title')}"),
                              buttons=[
                                  await create_buttons(text=f"{get_text('settings_1')}", on_click=select_ai_model),
                                  await create_buttons(text=f"{get_text('settings_2')}", on_click=enter_api_id_api_hash),
