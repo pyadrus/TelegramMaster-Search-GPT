@@ -58,6 +58,7 @@ translations = {
         "text_data_processing": "Введите данные для записи",
         "button_done": "✅ Готово",
         "button_back": "⬅️ Назад",
+        "text_settings_title": "Настройки программы\n\n",
     },
     "en": {
         "title": "TelegramMaster-Search-GPT",
@@ -115,6 +116,7 @@ translations = {
         "text_data_processing": "Enter the data for recording",
         "button_done": "✅ Done",
         "button_back": "⬅️ Back",
+        "text_settings_title": "Program settings\n\n",
     }
 }
 
