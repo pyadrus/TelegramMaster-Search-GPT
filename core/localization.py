@@ -100,11 +100,5 @@ translations = {
 current_language = "ru"  # По умолчанию русский
 
 
-def set_language(lang):
-    global current_language
-    if lang in translations:
-        current_language = lang
-
-
 def get_text(key):
     return translations[current_language].get(key, key)  # Если ключ не найден, возвращаем сам ключ

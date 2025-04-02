@@ -7,7 +7,7 @@ from core.localization import get_text
 from core.proxy_config import setup_proxy
 
 
-def promt_ai(number_of_groups, user_input):
+def promt_ai(number_of_groups, user_input) -> str:
     """Промт для AI"""
     # Используем get_text для получения переведённого текста промта
     promt_ai = f"""{get_text('ai_prompt')} {number_of_groups} {get_text('ai_prompt_unique_keywords')} 
