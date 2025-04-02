@@ -151,7 +151,7 @@ async def select_and_save_model(page: ft.Page, section, option):
             message_container.content = ft.Text(f"{get_text('ai_model_select_3')}")
         page.update()
 
-    save_button = ft.ElevatedButton(text="Сохранить", on_click=on_save)
+    save_button = ft.ElevatedButton(text=get_text("button_save"), on_click=on_save)
     b_button = ft.ElevatedButton(text=get_text("button_back"), on_click=lambda _: page.go("/"))
 
     page.views.clear()

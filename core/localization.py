@@ -60,6 +60,7 @@ translations = {
         "text_data_processing": "Введите данные для записи",
         "button_done": "✅ Готово",
         "button_back": "⬅️ Назад",
+        "button_save": "💾 Сохранить",
         "text_settings_title": "Настройки программы\n\n",
     },
     "en": {
@@ -112,7 +113,7 @@ translations = {
 
         "text_main_page": f"{program_name} 🚀\n\n{program_name} is a program for searching groups/channels by keywords 💬\n\n"
                           f"📂 The project is available on GitHub: https://github.com/pyadrus/TelegramMaster-Search-GPT\n"
-                          f"📲 Contact with the developer in Telegram: https://t.me/PyAdminRU\n,"
+                          f"📲 Contact with the developer in Telegram: https://t.me/PyAdminRU\n"
                           f"📡 Information on the channel: https://t.me/master_tg_d",
         "text_title": f"Version {program_version}. Date of change {date_of_program_change}",
         "text_title_version": f"Program version: {program_version}",
@@ -120,6 +121,7 @@ translations = {
         "text_data_processing": "Enter the data for recording",
         "button_done": "✅ Done",
         "button_back": "⬅️ Back",
+        "button_save": "💾 Save",
         "text_settings_title": "Program settings\n\n",
     }
 }

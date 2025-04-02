@@ -21,7 +21,7 @@ async def handle_settings(page: ft.Page):
     page.views.clear()
     lv = ft.ListView(expand=10, spacing=1, padding=2, auto_scroll=True)
     page.controls.append(lv)
-    lv.controls.append(ft.Text("Настройки программы\n\n"))
+    lv.controls.append(ft.Text(get_text('text_settings_title')))
     page.update()
 
     async def select_ai_model(_):
