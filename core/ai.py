@@ -10,8 +10,8 @@ from core.proxy_config import setup_proxy
 def promt_ai(number_of_groups, user_input) -> str:
     """Промт для AI"""
     # Используем get_text для получения переведённого текста промта
-    promt_ai = f"""{get_text('ai_prompt')} {number_of_groups} {get_text('ai_prompt_unique_keywords')} 
-    {get_text('ai_prompt_based_on')} {user_input}. {get_text('ai_prompt_return_format')}"""
+    promt_ai = (f"{get_text('ai_prompt')} {number_of_groups} {get_text('ai_prompt_unique_keywords')} "
+                f"{get_text('ai_prompt_based_on')} {user_input}. {get_text('ai_prompt_return_format')}")
     return promt_ai
 
 

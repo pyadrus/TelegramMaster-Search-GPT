@@ -8,7 +8,7 @@ PRIMARY_COLOR = ft.colors.CYAN_600
 async def program_title(title):
     """"Заголовок страниц программы"""
     # Создаем заголовок
-    title = ft.Text(
+    return ft.Text(
         spans=[
             ft.TextSpan(
                 title,  # Текст заголовка
@@ -19,7 +19,6 @@ async def program_title(title):
                         gradient=ft.PaintLinearGradient(
                             (0, 20), (150, 20), [PRIMARY_COLOR, PRIMARY_COLOR]
                         )), ), ), ], )
-    return title
 
 
 async def view_with_elements(page: ft.Page, title: ft.Text, buttons: list[ft.ElevatedButton], route_page,

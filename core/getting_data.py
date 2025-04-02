@@ -6,7 +6,6 @@ from core.database import get_all_groups
 
 async def getting_data_from_database():
     """Получение данных из базы данных."""
-    data = get_all_groups()
     # Создание новой рабочей книги
     workbook = openpyxl.Workbook()
     sheet = workbook.active
@@ -15,7 +14,7 @@ async def getting_data_from_database():
     headers = ["id", "title", "participants_count", "username", "access_hash", "date"]
     sheet.append(headers)
     # Запись данных
-    for row in data:
+    for row in get_all_groups():
         sheet.append(row)
     # Сохранение файла
     workbook.save("user_data/groups.xlsx")
