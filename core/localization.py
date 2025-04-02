@@ -37,6 +37,7 @@ translations = {
         "invalid_language_choice": "Некорректный выбор языка, используется сохранённый",
         "change_language": "Сменить язык",
         "language_changed": "Язык успешно изменён",
+        "language_changed_1": "⚙️ Смена языка",
 
         "error": "Ошибка аккаунта: ",
         "error_1": "Ошибка флуда: ",
@@ -95,6 +96,7 @@ translations = {
         "invalid_language_choice": "Invalid language choice, using saved language",
         "change_language": "Change language",
         "language_changed": "Language successfully changed",
+        "language_changed_1": "⚙️ Language change",
 
         "error": "Account error:",
         "error_1": "Flood error:",

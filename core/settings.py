@@ -45,7 +45,7 @@ async def change_language(page: ft.Page):
         language = "en"
         await update_config_value(section='localization', option='language', value=language)
 
-    await view_with_elements(page=page, title=await program_title(title="⚙️ Смена языка"),
+    await view_with_elements(page=page, title=await program_title(title=get_text("language_changed_1")),
                              buttons=[
                                  await create_buttons(text=f"Русский", on_click=_change_language_ru),
                                  await create_buttons(text=f"English", on_click=_change_language_en),
