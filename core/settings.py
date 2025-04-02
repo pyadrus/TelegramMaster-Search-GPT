@@ -146,7 +146,7 @@ async def select_and_save_model(page: ft.Page, section, option):
         if selected_key in ai_list:
             selected_value = ai_list[selected_key]
             await update_config_value(section, option, selected_value)
-            message_container.content = ft.Text(f"Выбрана модель: {selected_value}")
+            message_container.content = ft.Text(f"{get_text('ai_model_select_5')}{selected_value}")
         else:
             message_container.content = ft.Text(f"{get_text('ai_model_select_3')}")
         page.update()

@@ -28,6 +28,7 @@ translations = {
         "ai_model_select_2": "Выберите модель ИИ:",
         "ai_model_select_3": "Ошибка: некорректный выбор.",
         "ai_model_select_4": "Введите сообщение для ИИ: ",
+        "ai_model_select_5": "Выбрана модель: ",
 
         "api_id_entry": "Введите api_id",
         "api_hash_entry": "Введите api_hash",
@@ -86,7 +87,8 @@ translations = {
         "ai_model_select_1": "Answer from AI:",
         "ai_model_select_2": "Choose an AI model:",
         "ai_model_select_3": "Error: incorrect selection.",
-        "ai_model_select_4": "Введите сообщение для ИИ: ",
+        "ai_model_select_4": "Enter a message for AI: ",
+        "ai_model_select_5": "Model selected: ",
 
         "api_id_entry": "Enter api_id",
         "api_hash_entry": "Enter api_hash",
