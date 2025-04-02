@@ -67,10 +67,10 @@ async def writing_api_id_api_hash(page: ft.Page):
     page.controls.append(lv)
     lv.controls.append(ft.Text(get_text("text_settings_title")))
     page.update()
-    lv.controls.append(ft.Text("Ввод api_id и api_hash"))
+    lv.controls.append(ft.Text(get_text("settings_2")))
 
-    api_id_data = ft.TextField(label="Введите api_id", multiline=True, max_lines=19)
-    api_hash_data = ft.TextField(label="Введите api_hash", multiline=True, max_lines=19)
+    api_id_data = ft.TextField(label=get_text("select_action_2"), multiline=True, max_lines=19)
+    api_hash_data = ft.TextField(label=get_text("select_action_3"), multiline=True, max_lines=19)
 
     async def btn_click(e) -> None:
         await update_config_value(section='telegram_settings', option='api_id', value=api_id_data.value)

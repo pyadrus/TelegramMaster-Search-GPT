@@ -29,8 +29,8 @@ translations = {
         "ai_model_select_3": "Ошибка: некорректный выбор.",
         "ai_model_select_4": "Введите сообщение для ИИ: ",
 
-        "api_id_entry": "Запись api_id",
-        "api_hash_entry": "Запись api_hash",
+        "api_id_entry": "Введите api_id",
+        "api_hash_entry": "Введите api_hash",
         "docs_open": "Открыть документацию",
         "invalid_input": "Некорректный ввод",
         "select_language": "Выберите язык",
