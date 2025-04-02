@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import flet as ft
 from loguru import logger
-from rich import print
 from telethon.errors import AuthKeyUnregisteredError, FloodWaitError
 from telethon.sync import TelegramClient, functions
 
@@ -27,7 +26,7 @@ async def converting_into_a_list_for_further_processing(groups_set) -> None:
         save_to_database(group)  # Сохранение данных в базу данных SQLite
 
 
-async def search_and_processing_found_groups(client, term, groups_set) -> None:
+async def search_and_processing_found_groups(lv, page, client, term, groups_set) -> None:
     """Поиск групп Telegram и обработка результатов."""
     try:
         search_results = await client(functions.contacts.SearchRequest(q=term, limit=20))
@@ -43,10 +42,10 @@ async def search_and_processing_found_groups(client, term, groups_set) -> None:
             )
             groups_set.add(group_info)  # Добавление информации в множество
     except AuthKeyUnregisteredError as e:
-        print(f"{get_text('error')} {e}")
+        await message_output_program_window(lv, page, f"{get_text('error')} {e}")
         return
     except FloodWaitError as e:
-        print(f"{get_text('error_1')} {e}")
+        await message_output_program_window(lv, page, f"{get_text('error_1')} {e}")
         return
 
 
@@ -76,7 +75,7 @@ async def search_and_save_telegram_groups(page: ft.Page) -> None:
 
             # Получение ответа ИИ и его обработка
             ai_response = await get_groq_response(messages_for_ai.value)  # Получение ответа от Groq API.
-            print(f"{get_text('ai_model_select_1')}", ai_response)
+            await message_output_program_window(lv, page, f"{get_text('ai_model_select_1')}: {ai_response}")
             await message_output_program_window(lv, page, ai_response)
             await writing_file(ai_response)  # Сохранение ответа ИИ в файл words_list.txt
             search_terms = await reading_file()  # Чтение списка ключевых слов из файла
@@ -87,7 +86,7 @@ async def search_and_save_telegram_groups(page: ft.Page) -> None:
             # Поиск групп по каждому термину
             for term in search_terms:
                 # Поиск групп и каналов по ключевому слову
-                await search_and_processing_found_groups(client, term, groups_set)
+                await search_and_processing_found_groups(lv, page, client, term, groups_set)
 
             # Обработка и сохранение результатов
             await converting_into_a_list_for_further_processing(groups_set)

@@ -3,7 +3,6 @@ import webbrowser
 
 import flet as ft
 from loguru import logger
-from rich import print
 
 from core.buttons import create_buttons
 from core.config import program_version, date_of_program_change, program_name
@@ -178,7 +177,6 @@ class Application:
 
     async def _handle_documentation(self):
         """Страница 📖 Документация"""
-        print(f"[red] {get_text('docs_open')}\n")
         webbrowser.open('https://github.com/pyadrus/TelegramMaster-Search-GPT/wiki', new=2)
 
     async def _get_parsed_data(self):
