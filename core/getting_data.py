@@ -6,8 +6,7 @@ from core.database import get_all_groups
 
 async def getting_data_from_database():
     """Получение данных из базы данных."""
-    # Создание новой рабочей книги
-    workbook = openpyxl.Workbook()
+    workbook = openpyxl.Workbook()  # Создание новой рабочей книги
     sheet = workbook.active
     sheet.title = "Chat list"
     # Заголовки столбцов
