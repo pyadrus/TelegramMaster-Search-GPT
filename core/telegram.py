@@ -21,8 +21,7 @@ async def connect_to_telegram() -> TelegramClient:
 
 async def converting_into_a_list_for_further_processing(groups_set) -> None:
     """Преобразование множества групп в список и сохранение в базу данных."""
-    groups_list = list(groups_set)
-    for group in groups_list:
+    for group in list(groups_set):
         save_to_database(group)  # Сохранение данных в базу данных SQLite
 
 
@@ -32,15 +31,14 @@ async def search_and_processing_found_groups(lv, page, client, term, groups_set)
         search_results = await client(functions.contacts.SearchRequest(q=term, limit=20))
         # Обработка найденных групп и каналов
         for chat in search_results.chats:
-            group_info = (
+            groups_set.add(
                 chat.id,  # ID группы / канала
                 chat.title,  # Название группы / канала
                 chat.participants_count,  # Количество участников
                 chat.username,  # Username группы / канала
                 chat.access_hash,  # Hash группы / канала
                 chat.date  # Дата создания
-            )
-            groups_set.add(group_info)  # Добавление информации в множество
+            )  # Добавление информации в множество
     except AuthKeyUnregisteredError as e:
         await message_output_program_window(lv, page, f"{get_text('error')} {e}")
         return
@@ -69,7 +67,6 @@ async def search_and_save_telegram_groups(page: ft.Page) -> None:
 
     async def btn_click(e) -> None:
         try:
-            # messages_for_ai = input(get_text("ai_model_select_4"))
             client = await connect_to_telegram()  # Инициализация клиента Telegram
             groups_set = set()  # Создание множества для уникальных результатов
 

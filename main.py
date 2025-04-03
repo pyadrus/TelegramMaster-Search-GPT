@@ -40,13 +40,12 @@ async def handle_settings(page: ft.Page):
         """Изменение количества предложенных групп AI"""
         await record_setting(page)
 
-    await view_with_elements(page=page, title=await program_title(title=f"{get_text('settings_title')}"),
+    await view_with_elements(page=page, title=await program_title(title=get_text('settings_title')),
                              buttons=[
-                                 await create_buttons(text=f"{get_text('settings_1')}", on_click=select_ai_model),
-                                 await create_buttons(text=f"{get_text('settings_2')}", on_click=enter_api_id_api_hash),
-                                 await create_buttons(text=f"{get_text('settings_4')}", on_click=_change_language),
-                                 await create_buttons(text=f"{get_text('settings_5')}",
-                                                      on_click=change_the_number_of_suggested_ai_groups),
+                                 await create_buttons(text=get_text('settings_1'), on_click=select_ai_model),
+                                 await create_buttons(text=get_text('settings_2'), on_click=enter_api_id_api_hash),
+                                 await create_buttons(text=get_text('settings_4'), on_click=_change_language),
+                                 await create_buttons(text=get_text('settings_5'), on_click=change_the_number_of_suggested_ai_groups),
                                  await create_buttons(text=get_text("button_back"), on_click=lambda _: page.go("/"))
                              ],
                              route_page="change_name_description_photo",
@@ -73,7 +72,7 @@ class Application:
 
     async def actions_with_the_program_window(self, page: ft.Page):
         """Изменение на изменение главного окна программы."""
-        page.title = f"{get_text('text_title')}"
+        page.title = get_text('text_title')
         page.window.width = self.WINDOW_WIDTH
         page.window.height = self.WINDOW_HEIGHT
         page.window.resizable = False
@@ -109,13 +108,13 @@ class Application:
     def build_menu(self) -> ft.Column:
         """Создает колонку с заголовками и кнопками."""
         title = self.create_title(text=program_name, font_size=19)
-        version = self.create_title(text=f"{get_text('text_title_version')}", font_size=13)
-        date_program_change = self.create_title(text=f"{get_text('text_title_date')}", font_size=13)
+        version = self.create_title(text=get_text('text_title_version'), font_size=13)
+        date_program_change = self.create_title(text=get_text('text_title_date'), font_size=13)
         buttons = [
-            self.create_button(f"{get_text('menu_1')}", "/data_processing"),
-            self.create_button(f"{get_text('menu_2')}", "/settings"),
-            self.create_button(f"{get_text('menu_3')}", "/documentation"),
-            self.create_button(f"{get_text('menu_4')}", "/get_parsed_data"),
+            self.create_button(get_text('menu_1'), "/data_processing"),
+            self.create_button(get_text('menu_2'), "/settings"),
+            self.create_button(get_text('menu_3'), "/documentation"),
+            self.create_button(get_text('menu_4'), "/get_parsed_data"),
         ]
         return ft.Column(
             [title, version, date_program_change, *buttons],
@@ -133,7 +132,7 @@ class Application:
 
     def _add_startup_message(self):
         """Добавляет стартовое сообщение в ListView."""
-        self.info_list.controls.append(ft.Text(f"{get_text('text_main_page')}"))
+        self.info_list.controls.append(ft.Text(get_text('text_main_page')))
 
     async def route_change(self, route):
         """Обработчик изменения маршрута."""

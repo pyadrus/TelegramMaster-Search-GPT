@@ -148,7 +148,7 @@ async def select_and_save_model(page: ft.Page, section, option):
             await update_config_value(section, option, selected_value)
             message_container.content = ft.Text(f"{get_text('ai_model_select_5')}{selected_value}")
         else:
-            message_container.content = ft.Text(f"{get_text('ai_model_select_3')}")
+            message_container.content = ft.Text(get_text('ai_model_select_3'))
         page.update()
 
     page.views.clear()
@@ -158,7 +158,7 @@ async def select_and_save_model(page: ft.Page, section, option):
             controls=[
                 ft.Column(
                     controls=[
-                        ft.Text(f"{get_text('ai_model_select')}\n", size=20, weight=ft.FontWeight.BOLD),
+                        ft.Text(get_text('ai_model_select'), size=20, weight=ft.FontWeight.BOLD),
                         dropdown,
                         ft.ElevatedButton(text=get_text("button_save"), on_click=on_save),
                         ft.ElevatedButton(text=get_text("button_back"), on_click=lambda _: page.go("/")),
