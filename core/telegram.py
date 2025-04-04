@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
+import os.path
+
 import flet as ft
 from loguru import logger
 from telethon.errors import AuthKeyUnregisteredError, FloodWaitError
@@ -12,11 +15,34 @@ from core.localization import get_text
 from core.settings import add_view_with_fields_and_button
 
 
+def find_filess(directory_path, extension) -> list:
+    """
+    Поиск файлов с определенным расширением в директории. Расширение файла должно быть указанно без точки.
+
+    :param directory_path: Путь к директории
+    :param extension: Расширение файла (указанное без точки)
+    :return list: Список имен найденных файлов
+    """
+    entities = []  # Создаем словарь с именами найденных аккаунтов в папке user_data/accounts
+    try:
+        for x in os.listdir(directory_path):
+            if x.endswith(f".{extension}"):  # Проверяем, заканчивается ли имя файла на заданное расширение
+                file = os.path.splitext(x)[0]  # Разделяем имя файла на имя без расширения и расширение
+                entities.append(file)  # Добавляем информацию о файле в список
+
+        logger.info(f"🔍 Найденные файлы: {entities}")  # Выводим имена найденных аккаунтов
+
+        return entities  # Возвращаем список json файлов
+    except FileNotFoundError:
+        logger.error(f"❌ Ошибка! Директория {directory_path} не найдена!")
+
 async def connect_to_telegram() -> TelegramClient:
     """Инициализация и подключение клиента Telegram."""
-    client = TelegramClient(f"user_data/{username}", int(api_id), api_hash)
-    await client.connect()  # Подключение к Telegram
-    return client
+    for session_name in find_filess(directory_path='user_data/accounts', extension="session"):
+        logger.info(f"🔑 Подключение к аккаунту: {session_name}")
+        client = TelegramClient(f"user_data/accounts/{session_name}", int(api_id), api_hash)
+        await client.connect()  # Подключение к Telegram
+        return client
 
 
 async def converting_into_a_list_for_further_processing(groups_set) -> None:
@@ -31,14 +57,16 @@ async def search_and_processing_found_groups(lv, page, client, term, groups_set)
         search_results = await client(functions.contacts.SearchRequest(q=term, limit=20))
         # Обработка найденных групп и каналов
         for chat in search_results.chats:
-            groups_set.add(
-                chat.id,  # ID группы / канала
-                chat.title,  # Название группы / канала
-                chat.participants_count,  # Количество участников
-                chat.username,  # Username группы / канала
-                chat.access_hash,  # Hash группы / канала
-                chat.date  # Дата создания
-            )  # Добавление информации в множество
+            # Create a tuple with all the chat information and add it as a single element
+            group_data = (
+                chat.id,                # ID группы / канала
+                chat.title,            # Название группы / канала
+                chat.participants_count, # Количество участников
+                chat.username,         # Username группы / канала
+                chat.access_hash,      # Hash группы / канала
+                chat.date             # Дата создания
+            )
+            groups_set.add(group_data)  # Add the tuple to the set
     except AuthKeyUnregisteredError as e:
         await message_output_program_window(lv, page, f"{get_text('error')} {e}")
         return
