@@ -8,7 +8,7 @@ from telethon.errors import AuthKeyUnregisteredError, FloodWaitError
 from telethon.sync import TelegramClient, functions
 
 from core.ai import get_groq_response
-from core.config import username, api_id, api_hash
+from core.config import api_id, api_hash
 from core.database import save_to_database, remove_duplicates
 from core.file_utils import writing_file, reading_file
 from core.localization import get_text
